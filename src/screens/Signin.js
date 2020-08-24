@@ -19,7 +19,6 @@ const Signin = props => {
 
     const handleSignin = (usernameOrEmail, password) => {
         props.dispatch(userSignin({ emailOrUsername: usernameOrEmail, password }));
-        // props.dispatchUserSignin(usernameOrEmail, password);
     };
 
     useEffect(() => {
@@ -85,10 +84,4 @@ const mapStateToProps = state => {
     };
 };
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         dispatchUserSignin: (usernameOrEmail, password) => dispatch(userSignin({ emailOrUsername: usernameOrEmail, password }))
-//     };
-// };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Signin);
+export default connect(mapStateToProps)(Signin);

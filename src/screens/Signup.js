@@ -24,7 +24,6 @@ const SignupPage = props => {
 
     const handleSignup = (email, username, password) => {
         props.dispatch(userSignup({ email, username, password }));
-        // props.dispatchUserSignup(email, username, password);
     };
 
     useEffect(() => {
@@ -32,7 +31,7 @@ const SignupPage = props => {
     });
 
     return (
-        props.user.isAuthenticating ?
+        props.isAuthenticating ?
             <View style={styles.container}>
                 <ActivityIndicator />
             </View>
@@ -97,14 +96,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.user.isAuthenticated
+        isAuthenticated: state.user.isAuthenticated,
+        isAuthenticating: state.user.isAuthenticating
     };
 };
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         dispatchUserSignup: (email, username, password) => dispatch(userSignup({ email, username, password }))
-//     };
-// };
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignupPage);
+export default connect(mapStateToProps)(SignupPage);
