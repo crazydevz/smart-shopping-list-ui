@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Button, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 
-import { userSignup } from '../actions/user';
 import colors from '../config/colors';
+import { userSignup } from '../actions/user';
 
 const SignupPage = props => {
     const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ const SignupPage = props => {
         setPassword(password);
     };
 
-    const handleSignup = (email, username, password) => {
+    const handleSignup = () => {
         props.dispatch(userSignup({ email, username, password }));
     };
 
@@ -37,6 +37,9 @@ const SignupPage = props => {
             </View>
             :
             <View style={styles.container}>
+                <Text style={styles.title}>
+                    Signup
+                </Text>
                 <TextInput
                     style={styles.textInput}
                     placeholder='Email'
@@ -56,19 +59,15 @@ const SignupPage = props => {
                     value={password}
                     onChangeText={handlePasswordInput}
                 />
-                <View style={styles.signupButton}>
-                    <Button
-                        onPress={() => handleSignup(email, username, password)}
-                        title='Signup'
-                        color={colors.secondary}
-                    />
+                <View style={styles.button}>
+                    <TouchableOpacity onPress={handleSignup}>
+                        <Text style={{color: colors.secondary}}>Signup</Text>
+                    </TouchableOpacity>
                 </View>
-                <View style={styles.signupButton}>
-                    <Button
-                        onPress={() => props.history.push('/Signin')}
-                        title='Signin instead?'
-                        color={colors.secondary}
-                    />
+                <View style={styles.button}>
+                    <TouchableOpacity onPress={() => props.history.push('/Signin')}>
+                        <Text style={{color: colors.secondary}}>Signin Instead?</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
     );
@@ -88,9 +87,20 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         backgroundColor: 'white',
     },
-    signupButton: {
+    title: {
+        color: colors.secondary,
+        fontSize: 50,
+        marginBottom: 50,
+    },
+    button: {
+        padding: 10,
+        backgroundColor: colors.primary,
+        borderColor: colors.secondary,
+        borderWidth: 2,
         marginTop: 25,
-        width: 100
+        width: 120,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 });
 

@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 
-import { userSignin } from '../actions/user';
 import colors from '../config/colors';
+import { userSignin } from '../actions/user';
 
 const Signin = props => {
-    const [usernameOrEmail, setUsernameOrEmail] = useState('');
+    const [emailOrUsername, setEmailOrUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleUsernameOrEmailInput = (usernameOrEmail) => {
-        setUsernameOrEmail(usernameOrEmail);
+    const handleEmailOrUsernameInput = emailOrUsername => {
+        setEmailOrUsername(emailOrUsername);
     };
 
-    const handlePasswordInput = (password) => {
+    const handlePasswordInput = password => {
         setPassword(password);
     };
 
-    const handleSignin = (usernameOrEmail, password) => {
-        props.dispatch(userSignin({ emailOrUsername: usernameOrEmail, password }));
+    const handleSignin = () => {
+        props.dispatch(userSignin({ emailOrUsername, password }));
     };
 
     useEffect(() => {
@@ -26,35 +26,39 @@ const Signin = props => {
     });
 
     return (
-        <View style={styles.container}>
-            <TextInput
-                style={styles.textInput}
-                placeholder='Username/Email'
-                value={usernameOrEmail}
-                onChangeText={handleUsernameOrEmailInput}
-            />
-            <TextInput
-                style={styles.textInput}
-                secureTextEntry
-                placeholder='Password'
-                value={password}
-                onChangeText={handlePasswordInput}
-            />
-            <View style={styles.signinButton}>
-                <Button
-                    title='Signin'
-                    color={colors.secondary}
-                    onPress={() => handleSignin(usernameOrEmail, password)}
-                />
+        props.isAuthenticating ?
+            <View style={styles.container}>
+                <ActivityIndicator />
             </View>
-            <View style={styles.signinButton}>
-                <Button
-                    onPress={() => props.history.push('/')}
-                    title='Signup instead?'
-                    color={colors.secondary}
+            :
+            <View style={styles.container}>
+                <Text style={styles.title}>
+                    Signin
+                </Text>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder='Username/Email'
+                    value={emailOrUsername}
+                    onChangeText={handleEmailOrUsernameInput}
                 />
+                <TextInput
+                    secureTextEntry
+                    style={styles.textInput}
+                    placeholder='Password'
+                    value={password}
+                    onChangeText={handlePasswordInput}
+                />
+                <View style={styles.button}>
+                    <TouchableOpacity onPress={handleSignin}>
+                        <Text style={{ color: colors.secondary }}>Signin</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.button}>
+                    <TouchableOpacity onPress={() => props.history.push('/')}>
+                        <Text style={{ color: colors.secondary }}>Signup Instead?</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
     );
 };
 
@@ -72,15 +76,27 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         backgroundColor: 'white',
     },
-    signinButton: {
+    title: {
+        color: colors.secondary,
+        fontSize: 50,
+        marginBottom: 50,
+    },
+    button: {
+        padding: 10,
+        backgroundColor: colors.primary,
+        borderColor: colors.secondary,
+        borderWidth: 2,
         marginTop: 25,
-        width: 100
+        width: 125,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 });
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.user.isAuthenticated
+        isAuthenticated: state.user.isAuthenticated,
+        isAuthenticating: state.user.isAuthenticating
     };
 };
 
