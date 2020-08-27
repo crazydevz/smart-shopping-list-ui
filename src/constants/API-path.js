@@ -1,0 +1,1 @@
+export const PATH_API_SERVER = 'https://pure-basin-90558.herokuapp.com';
