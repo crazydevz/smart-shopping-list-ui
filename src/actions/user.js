@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PATH_API_SERVER = 'https://pure-basin-90558.herokuapp.com';
+import { PATH_API_SERVER } from '../constants/API-path';
 
 const forwardData = (userData) => ({
     type: 'AUTHENTICATION_SUCCESS',
@@ -37,7 +37,6 @@ async function signup(userCredentials, callback) {
         };
 
         callback(forwardData(userData));
-
     } catch (e) {
         callback(forwardError(e));
     }
@@ -51,6 +50,7 @@ export const userSignup = userCredentials => {
 
 async function signin(userCredentials, callback) {
     try {
+        callback(startAuthentication());
         const response = await axios({
             method: 'post',
             url: `${PATH_API_SERVER}/users/login`,
@@ -69,7 +69,7 @@ async function signin(userCredentials, callback) {
 
         callback(forwardData(userData));
     } catch (e) {
-        console.log(e);
+        callback(forwardError(e));
     }
 };
 
