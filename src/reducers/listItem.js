@@ -1,5 +1,5 @@
 const listItemDefaultState = {
-    isCreating: false,
+    isLoading: false,
     itemId: Math.random().toString()
 };
 
@@ -8,13 +8,18 @@ export default (state = listItemDefaultState, action) => {
         case 'CREATE_ITEM_START':
             return {
                 ...state,
-                isCreating: true
+                isLoading: true
             };
         case 'CREATE_ITEM_SUCCESS':
             return {
                 ...state,
                 ...action.payload,
-                isCreating: false,
+                isLoading: false,
+            };
+        case 'UPDATE_ITEM_START':
+            return {
+                ...state,
+                ...action.payload
             };
         default:
             return state;

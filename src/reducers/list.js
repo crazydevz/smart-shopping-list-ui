@@ -1,5 +1,5 @@
 const listDefaultState = {
-    isCreating: false,
+    isLoading: false,
     listId: Math.random().toString()
 };
 
@@ -8,15 +8,15 @@ export default (state = listDefaultState, action) => {
         case 'CREATE_LIST_START':
             return {
                 ...state,
-                isCreating: true
+                isLoading: true
             };
         case 'CREATE_LIST_SUCCESS':
             return {
                 ...state,
                 ...action.payload,
-                isCreating: false
+                isLoading: false
             };
-        case 'LOADED_LISTS':
+        case 'LOAD_LISTS_SUCCESS':
             return {
                 ...state,
                 loadedLists: action.payload

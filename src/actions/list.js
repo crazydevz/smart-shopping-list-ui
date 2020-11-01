@@ -2,28 +2,28 @@ import axios from 'axios';
 
 import { PATH_API_SERVER } from '../constants/API-path';
 
-const startCreatingList = () => {
+const createListStart = () => {
     return {
         type: 'CREATE_LIST_START'
     };
 };
 
-const forwardData = listData => {
+const createListSuccess = createdList => {
     return {
         type: 'CREATE_LIST_SUCCESS',
-        payload: listData
+        payload: createdList
     };
 };
 
-const loadLists = loadedLists => {
+const loadListsSuccess = loadedLists => {
     return {
-        type: 'LOADED_LISTS',
+        type: 'LOAD_LISTS_SUCCESS',
         payload: loadedLists
     };
 };
 
 async function createList(authToken, listName, callback) {
-    callback(startCreatingList());
+    callback(createListStart());
     try {
         const response = await axios({
             method: 'post',
@@ -42,7 +42,7 @@ async function createList(authToken, listName, callback) {
             shareeId: responseData._sharee,
             shareeUsername: responseData.sharee_username,
         };
-        callback(forwardData(listData));
+        callback(createListSuccess(listData));
     } catch (e) {
         console.log(e);
     }
@@ -87,7 +87,7 @@ async function loadList(authToken, callback) {
         const responseData = response.data;
 
         loadedLists = responseData.myLists;
-        callback(loadLists(loadedLists));
+        callback(loadListsSuccess(loadedLists));
     } catch (e) {
         console.log(e);
     }
@@ -97,7 +97,6 @@ export const loadRemoteLists = (authToken) => {
     return async (dispatch, getState) => {
         await loadList(authToken, dispatch);
         stateAfter = getState();
-        // console.log(stateAfter.list.loadedLists);
         return stateAfter.list.loadedLists;
     };
 };
