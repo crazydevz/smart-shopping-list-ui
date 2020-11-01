@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { incrementCount } from '../actions/count';
 
-const Count = (props) => (
+const Count = props => (
     <View style={styles.container}>
         <Text>Count: {props.count}</Text>
         <Button
@@ -17,7 +17,7 @@ const Count = (props) => (
     </View>
 );
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
     return {
         count: state.count
     };

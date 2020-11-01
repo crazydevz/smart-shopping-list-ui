@@ -1,22 +1,25 @@
 import React, { useEffect } from 'react';
+import { ActivityIndicator } from 'react-native';
 
-import { View, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
+import Container from '../components/Container';
 
-const Loading = props => (
-    <View style={styles.container}>
-        <ActivityIndicator />
-    </View>
-);
+const Loading = props => {
+    // useEffect(() => {
+    //     props.isAuthenticated && props.history.push(props.screenPath);
+    // });
 
-useEffect(() => {
-    !props.isLoading && props.history.push('/Lists');
-});
+    return (
+        <Container>
+            <ActivityIndicator />
+        </Container>
+    );
+};
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.primary,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
+// const mapStateToProps = state => {
+//     return {
+//         isAuthenticated: state.user.isAuthenticated
+//     };
+// };
+
+export default connect()(Loading);

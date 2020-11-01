@@ -1,44 +1,87 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import colors from '../config/colors';
+import { updateItemStart } from '../actions/listItem';
 
 const ListItem = props => {
+    const updateItem = () => {
+        const itemData = {
+            itemName: props.itemVal.itemName,
+            itemPrice: props.itemVal.itemPrice,
+            itemQuantity: props.itemVal.itemQuantity,
+            itemId: props.itemKey
+        };
+        props.dispatch(updateItemStart(itemData));
+        props.setUpdateMode(true);
+    };
     return (
         <View style={styles.itemContainer}>
-            <View style={styles.itemLeft} >
-                <TouchableOpacity>
-    <Text style={{color: colors.primary}} >{props.itemVal.itemName}|  ${props.itemVal.itemPrice}|  {props.itemVal.itemQuantity}</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.itemRight}>
-                <TouchableOpacity onPress={() => props.onDelete(props.itemKey)} >
-                    <Text style={{color: 'red'}} >Delete</Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+                style={styles.itemDataContainer}
+                onPress={updateItem}
+            >
+                <View style={styles.itemName}>
+                    <Text style={[styles.itemDataText, styles.itemNameText]}>{props.itemVal.itemName}</Text>
+                </View>
+                <View style={styles.itemData}>
+                    <Text style={styles.itemDataText}>${props.itemVal.itemPrice}</Text>
+                </View>
+                <View style={styles.itemData}>
+                    <Text style={styles.itemDataText}>{props.itemVal.itemQuantity}</Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.options} onPress={() => props.onDelete(props.itemKey)}>
+                <Image
+                    source={require('../../assets/favicon.png')}
+                    style={styles.optionsIcon}
+                    onPress={() => props.onDelete(props.itemKey)}
+                />
+            </TouchableOpacity>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     itemContainer: {
-        padding: 10,
-        marginVertical: 10,
-        backgroundColor: colors.secondary,
+        borderColor: 'gray',
+        borderWidth: 1,
         flexDirection: 'row',
-        flex: 1,
+        marginVertical: 5,
+        padding: 10,
+        width: '95%',
     },
-    itemLeft: {
+    itemDataContainer: {
+        flex: 4,
+        flexDirection: 'row',
+    },
+    itemData: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    itemDataText: {
+        color: colors.secondary,
+        fontSize: 14,
+        textAlign: 'center',
+        textAlignVertical: 'center',
+    },
+    itemName: {
         flex: 3,
         justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: colors.primary,
-        borderWidth: 2,
     },
-    itemRight: {
-        padding: 10,
-        backgroundColor: colors.primary,
+    itemNameText: {
+        textAlign: 'left',
+    },
+    options: {
+        alignItems: 'center',
+        paddingVertical: 5,
+        flex: 1,
+    },
+    optionsIcon: {
+        width: 25,
+        height: 25,
     },
 });
 
-export default ListItem;
+export default connect()(ListItem);

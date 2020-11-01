@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Button, Modal } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Button, Modal } from 'react-native';
+
+import colors from '../config/colors';
 
 const ListNameInput = props => {
     const [listName, setListName] = useState('');
@@ -13,7 +15,7 @@ const ListNameInput = props => {
         setListName('');
     };
 
-    const handleCancel = () => {
+    const cancelCreateList = () => {
         props.onCancel();
         setListName('');
     };
@@ -21,6 +23,9 @@ const ListNameInput = props => {
     return (
         <Modal style={styles.modal} visible={props.visible} animationType="slide">
             <View style={styles.inputContainer}>
+                <Text style={styles.title}>
+                    Create New List
+                </Text>
                 <TextInput
                     style={styles.input}
                     placeholder="List Name"
@@ -30,15 +35,16 @@ const ListNameInput = props => {
                 <View style={styles.buttonsContainer}>
                     <View style={styles.button}>
                         <Button
+                            color={colors.secondary}
                             title="Create List"
                             onPress={handleCreateList}
                         />
                     </View>
                     <View style={styles.button}>
                         <Button
-                            color="red"
+                            color='red'
                             title="cancel"
-                            onPress={handleCancel}
+                            onPress={cancelCreateList}
                         />
                     </View>
                 </View>
@@ -71,6 +77,12 @@ const styles = StyleSheet.create({
     modal: {
         height: '50%',
         backgroundColor: 'grey'
+    },
+    title: {
+        color: colors.secondary,
+        fontSize: 20,
+        marginVertical: 20,
+        textTransform: "uppercase",
     },
 });
 
