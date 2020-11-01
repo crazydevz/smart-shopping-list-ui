@@ -15,14 +15,12 @@ const createItemSuccess = itemData => {
     };
 };
 
-//
 export const updateItemStart = itemData => {
     return {
         type: 'UPDATE_ITEM_START',
         payload: itemData
     };
 };
-//
 
 async function createItem(authToken, listId, item, callback) {
     callback(createItemStart());
@@ -67,9 +65,7 @@ export const createRemoteListItem = (authToken, listId, item) => {
     };
 };
 
-//
 async function updateItem (authToken, listId, itemId, item, callback) {
-    // console.log(item);
     try {
         const response = await axios({
             method: 'patch',
@@ -88,7 +84,6 @@ export const updateRemoteListItem = (authToken, listId, itemId, item) => {
         await updateItem(authToken, listId, itemId, item, dispatch);
     };
 };
-//
 
 async function deleteItem(authToken, listId, itemId, callback) {
     try {
