@@ -1,8 +1,8 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { IconButton, Surface, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
 
-import colors from '../config/colors';
 import { updateItemStart } from '../actions/listItem';
 
 const ListItem = props => {
@@ -17,70 +17,62 @@ const ListItem = props => {
         props.setUpdateMode(true);
     };
     return (
-        <View style={styles.itemContainer}>
+        <Surface style={styles.itemContainer}>
             <TouchableOpacity
-                style={styles.itemDataContainer}
+                style={styles.itemInfo}
                 onPress={updateItem}
             >
                 <View style={styles.itemName}>
-                    <Text style={[styles.itemDataText, styles.itemNameText]}>{props.itemVal.itemName}</Text>
+                    <Text style={styles.itemNameText}>{props.itemVal.itemName}</Text>
                 </View>
                 <View style={styles.itemData}>
-                    <Text style={styles.itemDataText}>${props.itemVal.itemPrice}</Text>
+                    <Text>${props.itemVal.itemPrice}</Text>
                 </View>
                 <View style={styles.itemData}>
-                    <Text style={styles.itemDataText}>{props.itemVal.itemQuantity}</Text>
+                    <Text>{props.itemVal.itemQuantity}</Text>
                 </View>
             </TouchableOpacity>
             <TouchableOpacity style={styles.options} onPress={() => props.onDelete(props.itemKey)}>
-                <Image
-                    source={require('../../assets/favicon.png')}
-                    style={styles.optionsIcon}
+                <IconButton
+                    icon="delete"
+                    size={20}
                     onPress={() => props.onDelete(props.itemKey)}
                 />
             </TouchableOpacity>
-        </View>
+        </Surface>
     );
 };
 
 const styles = StyleSheet.create({
     itemContainer: {
-        borderColor: 'gray',
-        borderWidth: 1,
-        flexDirection: 'row',
+        padding: 8,
         marginVertical: 5,
-        padding: 10,
+        height: 70,
         width: '95%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        elevation: 4,
     },
-    itemDataContainer: {
+    itemInfo: {
+        height: '100%',
         flex: 4,
         flexDirection: 'row',
     },
     itemData: {
-        flex: 1,
+        alignItems: 'center',
         justifyContent: 'center',
-    },
-    itemDataText: {
-        color: colors.secondary,
-        fontSize: 14,
-        textAlign: 'center',
-        textAlignVertical: 'center',
+        flex: 1,
     },
     itemName: {
-        flex: 3,
+        alignItems: 'flex-start',
         justifyContent: 'center',
-    },
-    itemNameText: {
-        textAlign: 'left',
+        flex: 2,
     },
     options: {
         alignItems: 'center',
-        paddingVertical: 5,
+        justifyContent: 'center',
         flex: 1,
-    },
-    optionsIcon: {
-        width: 25,
-        height: 25,
     },
 });
 

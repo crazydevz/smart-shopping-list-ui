@@ -1,25 +1,26 @@
-import React, { useEffect } from 'react';
-import { ActivityIndicator } from 'react-native';
+import React, {useEffect} from 'react';
+import { StyleSheet } from 'react-native';
+import { ActivityIndicator, Title } from 'react-native-paper';
 
-import { connect } from 'react-redux';
 import Container from '../components/Container';
 
-const Loading = props => {
-    // useEffect(() => {
-    //     props.isAuthenticated && props.history.push(props.screenPath);
-    // });
-
+const Loading = (props) => {
     return (
         <Container>
-            <ActivityIndicator />
+            <ActivityIndicator
+                animating={true}
+                size='large'
+            />
+            <Title style={styles.loadingText}>{props.title}</Title>
         </Container>
     );
 };
 
-// const mapStateToProps = state => {
-//     return {
-//         isAuthenticated: state.user.isAuthenticated
-//     };
-// };
+const styles = StyleSheet.create({
+    loadingText: {
+        marginTop: 20,
+        textTransform: 'capitalize'
+    },
+});
 
-export default connect()(Loading);
+export default Loading;

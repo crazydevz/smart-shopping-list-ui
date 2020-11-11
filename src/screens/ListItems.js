@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import { Appbar, FAB, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import colors from '../config/colors';
 import Container from '../components/Container';
-import Header from '../components/Header';
+// import Header from '../components/Header';
 import ListItemInput from '../components/ListItemInput';
 import ListItem from '../components/ListItem';
 import ListItemUpdate from '../components/ListItemUpdate';
-import { userSignout } from '../actions/user';
 import { createRemoteListItem, updateRemoteListItem, deleteRemoteListItem } from '../actions/listItem';
 
 const ListItems = props => {
@@ -29,7 +29,6 @@ const ListItems = props => {
 
     const handleUpdateLocalItem = ({ itemId, itemName, itemPrice, itemQuantity }) => {
         const updatedItem = { itemId, itemName, itemPrice, itemQuantity };
-        // console.log(updatedItem);
         // Delete old list item from list items list
         setItems(currentItems => {
             return currentItems.filter(item => item.key !== itemId);
@@ -96,133 +95,66 @@ const ListItems = props => {
     }, []);
 
     return (
-        <Container>
-            <ListItemInput
-                visible={isAddMode}
-                onCreateItem={handleCreateItem}
-                onCancel={cancelCreateItem}
-            />
-            <ListItemUpdate
-                visible={isUpdateMode}
-                onUpdateItem={handleUpdateItem}
-                onCancel={cancelUpdateItem}
-            />
-            <Header>
-                <View style={{flexDirection: 'row', flex: 5}}>
-                    <TouchableOpacity
-                        style={styles.options}
-                        onPress={() => props.history.push('/Lists')}
-                    >
-                        <Image
-                            style={styles.optionsIcon}
-                            source={require('../../assets/round_arrow_back_white_18dp.png')}
-                        />
-                    </TouchableOpacity>
-                    <View style={styles.headerName}>
-                        <Text style={styles.headerNameText}>
-                            {props.location.state.listName}
-                        </Text>
-                    </View>
+        <View style={{width: '100%', flex: 1}}>
+            <Appbar.Header>
+                <Appbar.BackAction onPress={() => props.history.push('/Lists')} />
+                <Appbar.Content title={props.location.state.listName} />
+            </Appbar.Header>
+            <Container>
+                <ListItemInput
+                    visible={isAddMode}
+                    onCreateItem={handleCreateItem}
+                    onCancel={cancelCreateItem}
+                />
+                <ListItemUpdate
+                    visible={isUpdateMode}
+                    onUpdateItem={handleUpdateItem}
+                    onCancel={cancelUpdateItem}
+                />
+                <View style={{width: '100%', flex: 1}}>
+                    {(props.listItem.isLoading) ?
+                        <ActivityIndicator />
+                        :
+                        <View style={{ flex: 1, width: '100%' }}>
+                            {(items.length == 0) ?
+                            <Container>
+                                <Text style={{ color: colors.secondary}}>
+                                    No items in this list
+                                </Text>
+                            </Container>
+                            :
+                            <FlatList
+                                contentContainerStyle={{ alignItems: 'center'}}
+                                data={items}
+                                renderItem={itemData => (
+                                    <ListItem
+                                        itemKey={itemData.item.key}
+                                        itemVal={itemData.item.value}
+                                        onDelete={handleDeleteItem}
+                                        setUpdateMode={setUpdateMode}
+                                    />
+                                )}
+                            />}
+                        </View>
+                    }
                 </View>
-                <TouchableOpacity
-                    style={styles.signout}
-                    onPress={handleSignout}
-                >
-                    <Text style={styles.signoutText}>
-                        Signout
-                    </Text>
-                </TouchableOpacity>
-            </Header>
-            <View style={{width: '100%', flex: 1}}>
-                {(props.listItem.isLoading) ?
-                    <ActivityIndicator />
-                    :
-                    <View style={{ flex: 1, width: '100%' }}>
-                        {items.length == 0 &&
-                        <View style={styles.welcomeText}>
-                            <Text style={{ color: colors.secondary}}>
-                                No items in this list
-                            </Text>
-                        </View>}
-                        <FlatList
-                            contentContainerStyle={{ alignItems: 'center'}}
-                            data={items}
-                            renderItem={itemData => (
-                                <ListItem
-                                    itemKey={itemData.item.key}
-                                    itemVal={itemData.item.value}
-                                    onDelete={handleDeleteItem}
-                                    setUpdateMode={setUpdateMode}
-                                />
-                            )}
-                        />
-                    </View>
-                }
-            </View>
-            <TouchableOpacity
-                style={styles.createItemButton}
-                onPress={() => setAddMode(true)} >
-                <Text style={{color: colors.secondary, fontSize: 20}}>+</Text>
-            </TouchableOpacity>
-        </Container>
+                <FAB
+                    style={styles.createItemFab}
+                    large
+                    icon="plus"
+                    onPress={() => setAddMode(true)}
+                />
+            </Container>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
-    createItemButton: {
-        alignItems: 'center',
-        backgroundColor: colors.primary,
-        borderWidth: 2,
-        borderRadius: 50,
-        borderColor: colors.secondary,
-        bottom: 25,
-        color: colors.secondary,
-        height: 50,
-        justifyContent: 'center',
+    createItemFab: {
         position: 'absolute',
-        right: 30,
-        width: 50,
-    },
-    headerName: {
-        flex: 4,
-        justifyContent: 'center',
-    },
-    headerNameText: {
-        color: colors.primary,
-        fontSize: 25,
-        textAlign: 'left',
-        width: '100%',
-    },
-    options: {
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'center',
-    },
-    optionsIcon: {
-        height: 30,
-        width: 30,
-    },
-    signout: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    signoutText: {
-        color: colors.primary,
-        fontSize: 14,
-        textAlign: 'center',
-        width: '100%',
-    },
-    textInput: {
-        height: 40,
-        width: '75%',
-        borderColor: 'gray',
-        borderWidth: 1,
-        backgroundColor: 'white',
-    },
-    welcomeText: {
-        position: 'absolute',
-        left: 100,
-        top: 250,
+        margin: 16,
+        right: 0,
+        bottom: 0,
     },
 });
 

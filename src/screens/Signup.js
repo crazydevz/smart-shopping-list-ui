@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Button, Title, TextInput, useTheme } from 'react-native-paper';
 import { connect } from 'react-redux';
 
-import colors from '../config/colors';
 import Loading from '../components/Loading';
 import Container from '../components/Container';
 import { userSignup } from '../actions/user';
@@ -33,47 +33,51 @@ const SignupPage = props => {
         props.isAuthenticated && props.history.push('/Lists');
     });
 
+    const { colors } = useTheme();
+
     return (
         props.isAuthenticating ?
-            <Loading screenPath={'/Lists'} />
+            <Loading title='signing up' />
             :
             <Container>
                 <View style={styles.contentContainer}>
-                    <Text style={styles.title}>
-                        Signup
-                    </Text>
+                    <Title style={styles.title}>
+                        signup
+                    </Title>
                     <View style={styles.textInputContainer}>
                         <TextInput
                             style={styles.textInput}
-                            placeholder='Email'
+                            mode='outlined'
+                            label='Email'
+                            placeholder='abc@gmail.com'
                             value={email}
                             onChangeText={handleEmailInput}
                         />
                         <TextInput
                             style={styles.textInput}
-                            placeholder='Username'
+                            mode='outlined'
+                            label='Username'
+                            placeholder='Type a username'
                             value={username}
                             onChangeText={handleUsernameInput}
                         />
                         <TextInput
                             secureTextEntry
                             style={styles.textInput}
-                            placeholder='Password'
+                            mode='outlined'
+                            label='Password'
+                            placeholder='********'
                             value={password}
                             onChangeText={handlePasswordInput}
                         />
                     </View>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={handleSignup}>
-                            <Text style={[styles.buttonText, styles.signupButtonText]}>Signup</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => props.history.push('/Signin')}>
-                            <Text style={[styles.buttonText, styles.signinButtonText]}>Signin Instead?</Text>
-                        </TouchableOpacity>
+                        <Button style={styles.button} mode="contained" onPress={handleSignup}>
+                            signup
+                        </Button>
+                        <Button style={styles.button} mode="outlined" onPress={() => props.history.push('/Signin')}>
+                            signin instead
+                        </Button>
                     </View>
                 </View>
             </Container>
@@ -84,16 +88,12 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignItems: 'center',
         marginVertical: 20,
+        justifyContent: 'center',
         width: '100%',
     },
     button: {
         marginVertical: 10,
         width: '45%',
-    },
-    buttonText: {
-        fontSize: 18,
-        padding: 10,
-        textAlign: 'center',
     },
     contentContainer: {
         alignItems: 'center',
@@ -101,38 +101,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
     },
-    signupButtonText: {
-        backgroundColor: colors.secondary,
-        color: colors.primary,
-    },
-    signinButtonText: {
-        backgroundColor: colors.primary,
-        borderColor: colors.secondary,
-        borderWidth: 1,
-        color: colors.secondary,
-    },
     textInputContainer: {
         alignItems: 'center',
         marginVertical: 20,
         paddingHorizontal: '5%',
+        justifyContent: 'center',
         width: '100%',
     },
     textInput: {
-        borderColor: 'gray',
-        borderWidth: 1,
-        fontSize: 14,
         marginVertical: 5,
-        padding: 10,
         width: '100%',
     },
     title: {
-        color: colors.secondary,
         fontSize: 30,
         marginVertical: 20,
         textTransform: "uppercase",
     },
 });
-    
+
 const mapStateToProps = state => {
     return {
         isAuthenticated: state.user.isAuthenticated,

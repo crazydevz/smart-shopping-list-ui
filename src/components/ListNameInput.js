@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Button, Modal } from 'react-native';
-
-import colors from '../config/colors';
+import { StyleSheet, View } from 'react-native';
+import { Button, Modal, Portal, TextInput, Title } from 'react-native-paper';
 
 const ListNameInput = props => {
     const [listName, setListName] = useState('');
@@ -21,68 +20,74 @@ const ListNameInput = props => {
     };
 
     return (
-        <Modal style={styles.modal} visible={props.visible} animationType="slide">
-            <View style={styles.inputContainer}>
-                <Text style={styles.title}>
-                    Create New List
-                </Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="List Name"
-                    value={listName}
-                    onChangeText={handleListNameInput}
-                />
-                <View style={styles.buttonsContainer}>
-                    <View style={styles.button}>
-                        <Button
-                            color={colors.secondary}
-                            title="Create List"
-                            onPress={handleCreateList}
+        <Portal>
+            <Modal visible={props.visible} onDismiss={props.onCancel} contentContainerStyle={styles.containerStyle}>
+                <View style={styles.contentContainer}>
+                    <Title style={styles.title}>
+                        create new list
+                    </Title>
+                    <View style={styles.textInputContainer}>
+                        <TextInput
+                            style={styles.textInput}
+                            mode='outlined'
+                            label='List Name'
+                            placeholder='Enter list name'
+                            value={listName}
+                            onChangeText={handleListNameInput}
                         />
                     </View>
-                    <View style={styles.button}>
-                        <Button
-                            color='red'
-                            title="cancel"
-                            onPress={cancelCreateList}
-                        />
+                    <View style={styles.buttonContainer}>
+                        <Button style={styles.button} mode="contained" onPress={handleCreateList}>
+                            save
+                        </Button>
+                        <Button style={styles.button} mode="outlined" onPress={cancelCreateList}>
+                            cancel
+                        </Button>
                     </View>
                 </View>
-            </View>
-        </Modal>
+            </Modal>
+        </Portal>
     );
 }
 
 const styles = StyleSheet.create({
-    inputContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    input: {
-        width: '80%',
-        borderColor: 'black',
-        borderWidth: 1,
-        padding: 10,
-        marginBottom: 10
-    },
-    buttonsContainer: {
-        width: '70%',
+    buttonContainer: {
+        width: '100%',
+        marginVertical: 10,
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     button: {
-        width: '40%'
+        marginVertical: 10,
+        marginHorizontal: 10,
+        width: '45%',
     },
-    modal: {
-        height: '50%',
-        backgroundColor: 'grey'
+    containerStyle: {
+        backgroundColor: 'white',
+        padding: 20,
+        marginHorizontal: '5%',
+    },
+    contentContainer: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     title: {
-        color: colors.secondary,
         fontSize: 20,
-        marginVertical: 20,
+        marginVertical: 10,
         textTransform: "uppercase",
+    },
+    textInput: {
+        marginVertical: 5,
+        width: '100%',
+    },
+    textInputContainer: {
+        alignItems: 'center',
+        marginVertical: 10,
+        paddingHorizontal: '5%',
+        justifyContent: 'center',
+        width: '100%',
     },
 });
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Button, Title, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import colors from '../config/colors';
@@ -29,39 +30,39 @@ const Signin = props => {
 
     return (
         props.isAuthenticating ?
-            <Loading />
+            <Loading title='signing in' />
             :
             <Container>
                 <View style={styles.contentContainer}>
-                    <Text style={styles.title}>
+                    <Title style={styles.title}>
                         Signin
-                    </Text>
+                    </Title>
                     <View style={styles.textInputContainer}>
                         <TextInput
                             style={styles.textInput}
-                            placeholder='Username/Email'
+                            mode='outlined'
+                            label='Username/Email'
+                            placeholder='abc@gmail.com'
                             value={emailOrUsername}
                             onChangeText={handleEmailOrUsernameInput}
                         />
                         <TextInput
                             secureTextEntry
                             style={styles.textInput}
-                            placeholder='Password'
+                            mode='outlined'
+                            label='Password'
+                            placeholder='********'
                             value={password}
                             onChangeText={handlePasswordInput}
                         />
                     </View>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={handleSignin}>
-                            <Text style={[styles.buttonText, styles.signinButtonText]}>Signin</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => props.history.push('/')}>
-                            <Text style={[styles.buttonText, styles.signupButtonText]}>Signup Instead?</Text>
-                        </TouchableOpacity>
+                        <Button style={styles.button} mode="contained" onPress={handleSignin}>
+                            signin
+                        </Button>
+                        <Button style={styles.button} mode="outlined" onPress={() => props.history.push('/')}>
+                            signup instead
+                        </Button>
                     </View>
                 </View>
             </Container>
@@ -72,16 +73,12 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignItems: 'center',
         marginVertical: 20,
+        justifyContent: 'center',
         width: '100%',
     },
     button: {
         marginVertical: 10,
         width: '45%',
-    },
-    buttonText: {
-        fontSize: 18,
-        padding: 10,
-        textAlign: 'center',
     },
     contentContainer: {
         alignItems: 'center',
@@ -89,28 +86,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
     },
-    signinButtonText: {
-        backgroundColor: colors.secondary,
-        color: colors.primary,
-    },
-    signupButtonText: {
-        backgroundColor: colors.primary,
-        borderColor: colors.secondary,
-        borderWidth: 1,
-        color: colors.secondary,
-    },
     textInputContainer: {
         alignItems: 'center',
         marginVertical: 20,
         paddingHorizontal: '5%',
+        justifyContent: 'center',
         width: '100%',
     },
     textInput: {
-        borderColor: 'gray',
-        borderWidth: 1,
-        fontSize: 14,
         marginVertical: 5,
-        padding: 10,
         width: '100%',
     },
     title: {

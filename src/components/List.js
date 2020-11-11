@@ -1,77 +1,63 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { IconButton, Surface, Text } from 'react-native-paper';
 import { withRouter } from 'react-router-native';
-
-import colors from '../config/colors';
 
 const List = props => {
     return (
-        <View style={styles.listContainer}>
+        <Surface style={styles.listContainer}>
             <TouchableOpacity
                 style={styles.listInfo}
                 onPress={() => props.history.push({ pathname: '/ListItems', state: { listKey: props.listKey, listName: props.listVal.listName, listItems: props.listVal.listItems } })}
             >
                 <View style={styles.listName}>
-                    <Text style={styles.listNameText} >{props.listVal.listName}</Text>
+                    <Text>{props.listVal.listName}</Text>
                 </View>
                 <View style={styles.itemQuantity}>
-                    <Text style={styles.itemQuantityText}>
-                        { props.listVal.listItems.length }
-                    </Text>
+                    <Text>{props.listVal.listItems.length}</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.options} onPress={() => props.onDelete(props.listKey)}>
-                <Image
-                    source={require('../../assets/favicon.png')}
-                    style={styles.optionsIcon}
+            <View style={styles.options}>
+                <IconButton
+                    icon="delete"
+                    size={20}
+                    onPress={() => props.onDelete(props.listKey)}
                 />
-            </TouchableOpacity>
-        </View>
+            </View>
+        </Surface>
     );
 };
 
 const styles = StyleSheet.create({
     listContainer: {
-        borderColor: 'gray',
-        borderWidth: 1,
-        flexDirection: 'row',
+        padding: 8,
         marginVertical: 5,
-        padding: 10,
+        height: 70,
         width: '95%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        elevation: 4,
     },
     listInfo: {
+        height: '100%',
         flex: 4,
         flexDirection: 'row',
     },
     listName: {
-        flex: 3,
+        alignItems: 'flex-start',
         justifyContent: 'center',
-    },
-    listNameText: {
-        color: colors.secondary,
-        fontSize: 14,
-        textAlign: 'left',
-        textAlignVertical: 'center',
+        flex: 3,
     },
     itemQuantity: {
-        flex: 1,
+        alignItems: 'center',
         justifyContent: 'center',
-    },
-    itemQuantityText: {
-        color: colors.secondary,
-        fontSize: 14,
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        width: '100%',
+        flex: 1,
     },
     options: {
         alignItems: 'center',
-        paddingVertical: 5,
+        justifyContent: 'center',
         flex: 1,
-    },
-    optionsIcon: {
-        width: 25,
-        height: 25,
     },
 });
 

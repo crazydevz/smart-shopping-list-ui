@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Appbar, FAB, Menu } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import colors from '../config/colors';
 import Container from '../components/Container';
-import Header from '../components/Header';
 import ListNameInput from '../components/ListNameInput';
 import List from '../components/List';
 import { userSignout } from '../actions/user';
@@ -64,130 +64,65 @@ const Lists = props => {
     }, []);
 
     return (
-        <Container>
-            <ListNameInput
-                visible={isAddMode}
-                onCreateList={handleCreateList}
-                onCancel={cancelCreateList}
-            />
-            <Header>
-                <View style={{flexDirection: 'row', flex: 5}}>
-                    <TouchableOpacity
-                        style={styles.options}
-                    >
-                        <Image
-                            style={styles.optionsIcon}
-                            source={require('../../assets/baseline_menu_white_18dp.png')}
-                        />
-                    </TouchableOpacity>
-                    <View style={styles.headerName}>
-                        <Text style={styles.headerNameText}>
-                            My Lists
-                        </Text>
-                    </View>
+        <View style={{width: '100%', flex: 1}}>
+            <Appbar.Header>
+                <Appbar.Action icon='menu' />
+                <Appbar.Content title='My Lists' />
+                <Appbar.Action icon='power' onPress={handleSignout} />
+            </Appbar.Header>
+            <Container>
+                <ListNameInput
+                    visible={isAddMode}
+                    onCreateList={handleCreateList}
+                    onCancel={cancelCreateList}
+                />
+                <View style={{width: '100%', flex: 1}}>
+                    {(props.list.isLoading) ?
+                        <ActivityIndicator />
+                        :
+                        <View style={{ flex: 1, width: '100%' }}>
+                            {(lists.length == 0) ?
+                                <Container>
+                                    <Text style={{ color: colors.secondary }}>
+                                        It looks empty here.
+                                    </Text>
+                                    <Text style={{ color: colors.secondary }}>
+                                        Get started by creating a list
+                                    </Text>
+                                </Container>
+                                :
+                                <FlatList
+                                    contentContainerStyle={{ alignItems: 'center'}}
+                                    data={lists}
+                                    renderItem={itemData => (
+                                        <List
+                                            // hist={props.history}
+                                            listKey={itemData.item.key}
+                                            listVal={itemData.item.value}
+                                            onDelete={handleDeleteList}
+                                        />
+                                    )}
+                                />}
+                        </View>
+                    }
                 </View>
-                <TouchableOpacity
-                    style={styles.signout}
-                    onPress={handleSignout}
-                >
-                    <Text style={styles.signoutText}>
-                        Signout
-                    </Text>
-                </TouchableOpacity>
-            </Header>
-            <View style={{width: '100%', flex: 1}}>
-                {(props.list.isLoading) ?
-                    <ActivityIndicator />
-                    :
-                    <View style={{ flex: 1, width: '100%' }}>
-                        {lists.length == 0 &&
-                            <View style={styles.welcomeText}>
-                                <Text style={{ color: colors.secondary }}>
-                                    It looks empty here.
-                                </Text>
-                                <Text style={{ color: colors.secondary }}>
-                                    Get started by creating a list
-                                </Text>
-                            </View>}
-                        <FlatList
-                            contentContainerStyle={{ alignItems: 'center'}}
-                            data={lists}
-                            renderItem={itemData => (
-                                <List
-                                    // hist={props.history}
-                                    listKey={itemData.item.key}
-                                    listVal={itemData.item.value}
-                                    onDelete={handleDeleteList}
-                                />
-                            )}
-                        />
-                    </View>
-                }
-            </View>
-            <TouchableOpacity
-                style={styles.createListButton}
-                onPress={() => setAddMode(true)} >
-                <Text style={{ color: colors.secondary, fontSize: 20 }}>+</Text>
-            </TouchableOpacity>
-        </Container>
+                <FAB
+                    style={styles.createListFab}
+                    large
+                    icon="plus"
+                    onPress={() => setAddMode(true)}
+                />
+            </Container>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
-    createListButton: {
-        alignItems: 'center',
-        backgroundColor: colors.primary,
-        borderWidth: 2,
-        borderRadius: 50,
-        borderColor: colors.secondary,
-        bottom: 25,
-        color: colors.secondary,
-        height: 50,
-        justifyContent: 'center',
+    createListFab: {
         position: 'absolute',
-        right: 30,
-        width: 50,
-    },
-    headerName: {
-        flex: 4,
-        justifyContent: 'center',
-    },
-    headerNameText: {
-        color: colors.primary,
-        fontSize: 25,
-        textAlign: 'left',
-        width: '100%',
-    },
-    options: {
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'center',
-    },
-    optionsIcon: {
-        height: 30,
-        width: 30,
-    },
-    signout: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    signoutText: {
-        color: colors.primary,
-        fontSize: 14,
-        textAlign: 'center',
-        width: '100%',
-    },
-    textInput: {
-        height: 40,
-        width: '75%',
-        borderColor: 'gray',
-        borderWidth: 1,
-        backgroundColor: 'white',
-    },
-    welcomeText: {
-        position: 'absolute',
-        left: 100,
-        top: 250,
+        margin: 16,
+        right: 0,
+        bottom: 0,
     },
 });
 
