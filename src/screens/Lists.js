@@ -1,39 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Appbar, FAB, Menu } from 'react-native-paper';
+import React, { useState, useEffect, useCallback } from 'react';
+import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import { Appbar, FAB, Menu, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
 
-import colors from '../config/colors';
+// import DrawerView from '../components/DrawerView';
+import CustomDrawer from '../components/CustomDrawer';
 import Container from '../components/Container';
 import ListNameInput from '../components/ListNameInput';
+import ShareListModal from '../components/ShareListModal';
 import List from '../components/List';
 import { userSignout } from '../actions/user';
-import { createRemoteList, deleteRemotelist, loadRemoteLists } from '../actions/list';
+import { createRemoteList, deleteRemotelist, loadRemoteLists, shareList } from '../actions/list';
 
 const Lists = props => {
     const [lists, setLists] = useState([]);
     const [isAddMode, setAddMode] = useState(false);
+    const [isShareMode, setShareMode] = useState(false);
 
     const handleCreateList = listName => {
         (async () => {
             const listId = await props.dispatch(createRemoteList(props.user.authToken, listName));
             setLists(currentListNames => [
                 ...currentListNames,
-                { key: listId, value: { listName, listItems: [] } }
+                {
+                    key: listId,
+                    value: {
+                        listName,
+                        listItems: []
+                    }
+                }
             ]);
         })();
         setAddMode(false);
     };
 
-    const handleDeleteList = listKey => {
-        props.dispatch(deleteRemotelist(props.user.authToken, listKey));
+    const filterLists = listKey => {
         setLists(currentLists => {
             return currentLists.filter(list => list.key !== listKey);
         });
     };
 
+    const handleDeleteList = listKey => {
+        props.dispatch(deleteRemotelist(props.user.authToken, listKey));
+        filterLists(listKey);
+    };
+
     const cancelCreateList = () => {
         setAddMode(false);
+    };
+
+    const handleShareList = (listKey, shareeUsername) => {
+        props.dispatch(shareList(props.user.authToken, listKey, shareeUsername));
+        filterLists(listKey);
+        setShareMode(false);
+    };
+
+    const cancelShareList = () => {
+        setShareMode(false);
     };
 
     const handleSignout = () => {
@@ -49,7 +72,13 @@ const Lists = props => {
             for (let i = 0; i < loadedLists.length; i++) {
                 setLists(currentLists => [
                     ...currentLists,
-                    { key: loadedLists[i]._id, value: { listName: loadedLists[i].list_name, listItems: loadedLists[i].list_items } }
+                    {
+                        key: loadedLists[i]._id,
+                        value: {
+                            listName: loadedLists[i].list_name,
+                            listItems: loadedLists[i].list_items
+                        }
+                    }
                 ]);
             }
         })();
@@ -64,35 +93,41 @@ const Lists = props => {
     }, []);
 
     return (
-        <View style={{width: '100%', flex: 1}}>
+        // <View style={{ width: '100%', flex: 1 }}>
+        <CustomDrawer>
+            <ListNameInput
+                visible={isAddMode}
+                onCreateList={handleCreateList}
+                onCancel={cancelCreateList}
+            />
+            <ShareListModal
+                visible={isShareMode}
+                onShareList={handleShareList}
+                onCancel={cancelShareList}
+            />
             <Appbar.Header>
                 <Appbar.Action icon='menu' />
                 <Appbar.Content title='My Lists' />
                 <Appbar.Action icon='power' onPress={handleSignout} />
             </Appbar.Header>
             <Container>
-                <ListNameInput
-                    visible={isAddMode}
-                    onCreateList={handleCreateList}
-                    onCancel={cancelCreateList}
-                />
-                <View style={{width: '100%', flex: 1}}>
+                <View style={{ width: '100%', flex: 1 }}>
                     {(props.list.isLoading) ?
                         <ActivityIndicator />
                         :
-                        <View style={{ flex: 1, width: '100%' }}>
+                        <View style={{ width: '100%', flex: 1 }}>
                             {(lists.length == 0) ?
                                 <Container>
-                                    <Text style={{ color: colors.secondary }}>
+                                    <Text>
                                         It looks empty here.
                                     </Text>
-                                    <Text style={{ color: colors.secondary }}>
+                                    <Text>
                                         Get started by creating a list
                                     </Text>
                                 </Container>
                                 :
                                 <FlatList
-                                    contentContainerStyle={{ alignItems: 'center'}}
+                                    contentContainerStyle={{ alignItems: 'center' }}
                                     data={lists}
                                     renderItem={itemData => (
                                         <List
@@ -100,6 +135,7 @@ const Lists = props => {
                                             listKey={itemData.item.key}
                                             listVal={itemData.item.value}
                                             onDelete={handleDeleteList}
+                                            setShareMode={setShareMode}
                                         />
                                     )}
                                 />}
@@ -113,7 +149,8 @@ const Lists = props => {
                     onPress={() => setAddMode(true)}
                 />
             </Container>
-        </View>
+        </CustomDrawer>
+        // </View>
     );
 };
 

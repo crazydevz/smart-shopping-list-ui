@@ -3,12 +3,11 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Modal, Portal, TextInput, Title } from 'react-native-paper';
 import { connect } from 'react-redux';
 
-// import colors from '../config/colors';
-
 const ListItemUpdate = props => {
     const [itemName, setItemName] = useState('');
     const [itemPrice, setItemPrice] = useState('');
     const [itemQuantity, setItemQuantity] = useState('');
+    const [availableItemQuantity, setAvailableItemQuantity] = useState('');
 
     const handleItemNameInput = itemName => {
         setItemName(itemName);
@@ -22,12 +21,17 @@ const ListItemUpdate = props => {
         setItemQuantity(itemQuantity);
     };
 
+    const handleAvailableItemQuantityInput = itemQuantity => {
+        setAvailableItemQuantity(itemQuantity);
+    };
+
     const handleUpdateItem = () => {
         props.onUpdateItem({
             itemId: props.itemId,
             itemName: itemName,
             itemPrice: parseInt(itemPrice),
-            itemQuantity: parseInt(itemQuantity)
+            itemQuantity: parseInt(itemQuantity),
+            availableItemQuantity: parseInt(availableItemQuantity)
         });
         clearInputFields();
     };
@@ -47,6 +51,7 @@ const ListItemUpdate = props => {
         setItemName(props.itemName);
         setItemPrice(props.itemPrice);
         setItemQuantity(props.itemQuantity);
+        setAvailableItemQuantity(props.availableItemQuantity);
     }, [props.visible]);
 
     return (
@@ -58,6 +63,7 @@ const ListItemUpdate = props => {
                     </Title>
                     <View style={styles.textInputContainer}>
                         <TextInput
+                            disabled={props.itemType === 'receivedItem'}
                             style={styles.textInput}
                             mode='outlined'
                             label='Item Name'
@@ -80,7 +86,18 @@ const ListItemUpdate = props => {
                         <TextInput
                             style={styles.textInput}
                             mode='outlined'
-                            label='Item Quanity'
+                            label='Available Item Quantity'
+                            placeholder='Enter item quantity'
+                            value={availableItemQuantity}
+                            onChangeText={handleAvailableItemQuantityInput}
+                        />
+                    </View>
+                    <View style={styles.textInputContainer}>
+                        <TextInput
+                            disabled={props.itemType === 'receivedItem'}
+                            style={styles.textInput}
+                            mode='outlined'
+                            label='Item Quantity'
                             placeholder='Enter item quantity'
                             value={itemQuantity}
                             onChangeText={handleItemQuantityInput}
@@ -146,7 +163,8 @@ const mapStateToProps = state => {
         itemId: state.listItem.itemId,
         itemName: state.listItem.itemName,
         itemPrice: state.listItem.itemPrice + '',
-        itemQuantity: state.listItem.itemQuantity + ''
+        itemQuantity: state.listItem.itemQuantity + '',
+        availableItemQuantity: state.listItem.availableItemQuantity + ''
     };
 };
 

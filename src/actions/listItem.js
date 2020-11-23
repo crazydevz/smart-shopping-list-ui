@@ -80,7 +80,7 @@ async function updateItem (authToken, listId, itemId, item, callback) {
 };
 
 export const updateRemoteListItem = (authToken, listId, itemId, item) => {
-    return async (dispatch, getState) => {
+    return async (dispatch) => {
         await updateItem(authToken, listId, itemId, item, dispatch);
     };
 };

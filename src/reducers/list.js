@@ -21,6 +21,11 @@ export default (state = listDefaultState, action) => {
                 ...state,
                 loadedLists: action.payload
             };
+        case 'SHARE_LIST_START':
+            return {
+                ...state,
+                listId: action.payload
+            };
         default:
             return state;
     }

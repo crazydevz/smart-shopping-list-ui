@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Button, Title, TextInput, useTheme } from 'react-native-paper';
+import { Button, Title, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import Loading from '../components/Loading';
 import Container from '../components/Container';
 import { userSignup } from '../actions/user';
 
-const SignupPage = props => {
+const Signup = props => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -26,14 +26,11 @@ const SignupPage = props => {
 
     const handleSignup = () => {
         props.dispatch(userSignup({ email, username, password }));
-        // props.history.push('./Loading');
     };
 
     useEffect(() => {
         props.isAuthenticated && props.history.push('/Lists');
     });
-
-    const { colors } = useTheme();
 
     return (
         props.isAuthenticating ?
@@ -57,7 +54,7 @@ const SignupPage = props => {
                             style={styles.textInput}
                             mode='outlined'
                             label='Username'
-                            placeholder='Type a username'
+                            placeholder='someusername'
                             value={username}
                             onChangeText={handleUsernameInput}
                         />
@@ -86,36 +83,36 @@ const SignupPage = props => {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        alignItems: 'center',
-        marginVertical: 20,
-        justifyContent: 'center',
         width: '100%',
+        marginVertical: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     button: {
-        marginVertical: 10,
         width: '45%',
+        marginVertical: 10,
     },
     contentContainer: {
-        alignItems: 'center',
+        width: '100%',
         height: '70%',
-        justifyContent: 'center',
-        width: '100%',
-    },
-    textInputContainer: {
         alignItems: 'center',
-        marginVertical: 20,
-        paddingHorizontal: '5%',
         justifyContent: 'center',
-        width: '100%',
-    },
-    textInput: {
-        marginVertical: 5,
-        width: '100%',
     },
     title: {
         fontSize: 30,
-        marginVertical: 20,
         textTransform: "uppercase",
+        marginVertical: 20,
+    },
+    textInputContainer: {
+        width: '100%',
+        marginVertical: 20,
+        paddingHorizontal: '5%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    textInput: {
+        width: '100%',
+        marginVertical: 5,
     },
 });
 
@@ -126,4 +123,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(SignupPage);
+export default connect(mapStateToProps)(Signup);

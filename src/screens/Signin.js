@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Title, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 
-import colors from '../config/colors';
 import Loading from '../components/Loading';
 import Container from '../components/Container';
 import { userSignin } from '../actions/user';
@@ -71,37 +70,36 @@ const Signin = props => {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        alignItems: 'center',
-        marginVertical: 20,
-        justifyContent: 'center',
         width: '100%',
+        marginVertical: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     button: {
-        marginVertical: 10,
         width: '45%',
+        marginVertical: 10,
     },
     contentContainer: {
-        alignItems: 'center',
+        width: '100%',
         height: '70%',
-        justifyContent: 'center',
-        width: '100%',
-    },
-    textInputContainer: {
         alignItems: 'center',
-        marginVertical: 20,
-        paddingHorizontal: '5%',
         justifyContent: 'center',
-        width: '100%',
-    },
-    textInput: {
-        marginVertical: 5,
-        width: '100%',
     },
     title: {
-        color: colors.secondary,
         fontSize: 30,
         marginVertical: 20,
         textTransform: "uppercase",
+    },
+    textInputContainer: {
+        width: '100%',
+        marginVertical: 20,
+        paddingHorizontal: '5%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    textInput: {
+        width: '100%',
+        marginVertical: 5,
     },
 });
 

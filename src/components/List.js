@@ -2,13 +2,29 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { IconButton, Surface, Text } from 'react-native-paper';
 import { withRouter } from 'react-router-native';
+import { connect } from 'react-redux';
+
+import { shareListStart } from '../actions/list';
 
 const List = props => {
+    const handleShareList = () => {
+        props.dispatch(shareListStart(props.listKey));
+        props.setShareMode(true);
+    };
+
     return (
         <Surface style={styles.listContainer}>
             <TouchableOpacity
                 style={styles.listInfo}
-                onPress={() => props.history.push({ pathname: '/ListItems', state: { listKey: props.listKey, listName: props.listVal.listName, listItems: props.listVal.listItems } })}
+                onPress={() => props.history.push({
+                    pathname: '/ListItems',
+                    state: {
+                        listType: 'myList',
+                        listKey: props.listKey,
+                        listName: props.listVal.listName,
+                        listItems: props.listVal.listItems
+                    }
+                })}
             >
                 <View style={styles.listName}>
                     <Text>{props.listVal.listName}</Text>
@@ -21,7 +37,8 @@ const List = props => {
                 <IconButton
                     icon="delete"
                     size={20}
-                    onPress={() => props.onDelete(props.listKey)}
+                    // onPress={() => props.onDelete(props.listKey)}
+                    onPress={handleShareList}
                 />
             </View>
         </Surface>
@@ -61,4 +78,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default withRouter(List);
+export default connect()(withRouter(List));

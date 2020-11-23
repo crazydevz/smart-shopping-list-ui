@@ -3,13 +3,11 @@ import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 import { Appbar, FAB, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
 
-import colors from '../config/colors';
 import Container from '../components/Container';
-// import Header from '../components/Header';
 import ListItemInput from '../components/ListItemInput';
 import ListItem from '../components/ListItem';
 import ListItemUpdate from '../components/ListItemUpdate';
-import { createRemoteListItem, updateRemoteListItem, deleteRemoteListItem } from '../actions/listItem';
+import { createRemoteListItem, deleteRemoteListItem, updateRemoteListItem } from '../actions/listItem';
 
 const ListItems = props => {
     const [items, setItems] = useState([]);
@@ -21,14 +19,17 @@ const ListItems = props => {
             const createdItem = await props.dispatch(createRemoteListItem(props.user.authToken, props.location.state.listKey, item));
             setItems(currentItems => [
                 ...currentItems,
-                { key: createdItem.itemId, value: createdItem }
+                {
+                    key: createdItem.itemId,
+                    value: createdItem
+                }
             ]);
         })();
         setAddMode(false);
     };
 
-    const handleUpdateLocalItem = ({ itemId, itemName, itemPrice, itemQuantity }) => {
-        const updatedItem = { itemId, itemName, itemPrice, itemQuantity };
+    const handleUpdateLocalItem = ({ itemId, itemName, itemPrice, itemQuantity, availableItemQuantity }) => {
+        const updatedItem = { itemId, itemName, itemPrice, itemQuantity, availableItemQuantity };
         // Delete old list item from list items list
         setItems(currentItems => {
             return currentItems.filter(item => item.key !== itemId);
@@ -36,21 +37,25 @@ const ListItems = props => {
         // Add updated list item to list items list
         setItems(currentItems => [
             ...currentItems,
-            { key: updatedItem.itemId, value: updatedItem }
+            {
+                key: updatedItem.itemId,
+                value: updatedItem
+            }
         ]);
     };
 
     // handleUpdateItem
-    const handleUpdateItem = ({ itemId, itemName, itemPrice, itemQuantity }) => {
+    const handleUpdateItem = ({ itemId, itemName, itemPrice, itemQuantity, availableItemQuantity }) => {
         const item = {
             item_name: itemName,
             price_per_item: itemPrice,
-            quantity_requested: itemQuantity
+            quantity_requested: itemQuantity,
+            quantity_available: availableItemQuantity
         };
         (async () => {
             await props.dispatch(updateRemoteListItem(props.user.authToken, props.location.state.listKey, itemId, item));
         })();
-        handleUpdateLocalItem({ itemId, itemName, itemPrice, itemQuantity });
+        handleUpdateLocalItem({ itemId, itemName, itemPrice, itemQuantity, availableItemQuantity });
         setUpdateMode(false);
     };
 
@@ -69,10 +74,6 @@ const ListItems = props => {
         setUpdateMode(false);
     };
 
-    const handleSignout = () => {
-        props.dispatch(userSignout(props.user.authToken));
-    };
-
     const handleLoadedItems = () => {
         const loadedItems = props.location.state.listItems;
 
@@ -81,7 +82,15 @@ const ListItems = props => {
         for(let i = 0; i < loadedItems.length; i++) {
             setItems(currentItems => [
                 ...currentItems,
-                { key: loadedItems[i]._id, value: {itemName: loadedItems[i].item_name, itemPrice: loadedItems[i].price_per_item, itemQuantity: loadedItems[i].quantity_requested } }
+                {
+                    key: loadedItems[i]._id,
+                    value: {
+                        itemName: loadedItems[i].item_name,
+                        itemPrice: loadedItems[i].price_per_item,
+                        itemQuantity: loadedItems[i].quantity_requested,
+                        availableItemQuantity: loadedItems[i].quantity_available
+                    } 
+                }
             ]);
         }
     };
@@ -96,10 +105,18 @@ const ListItems = props => {
 
     return (
         <View style={{width: '100%', flex: 1}}>
-            <Appbar.Header>
-                <Appbar.BackAction onPress={() => props.history.push('/Lists')} />
-                <Appbar.Content title={props.location.state.listName} />
-            </Appbar.Header>
+            {(props.location.state.listType === 'myList') ?
+                <Appbar.Header>
+                    <Appbar.BackAction onPress={() => props.history.push('/Lists')} />
+                    <Appbar.Content title={props.location.state.listName} />
+                </Appbar.Header>
+                :
+                <Appbar.Header>
+                    <Appbar.BackAction onPress={() => props.history.push('/Outgoinglists')} />
+                    <Appbar.Content title={props.location.state.listName} subtitle={`Sent to ${props.location.state.shareeUsername}`} />
+                    <Appbar.Content title='Cancel' onPress={() => props.location.state.onUnshareList(props.location.state.listKey)} />
+                </Appbar.Header>
+            }
             <Container>
                 <ListItemInput
                     visible={isAddMode}
@@ -118,7 +135,7 @@ const ListItems = props => {
                         <View style={{ flex: 1, width: '100%' }}>
                             {(items.length == 0) ?
                             <Container>
-                                <Text style={{ color: colors.secondary}}>
+                                <Text>
                                     No items in this list
                                 </Text>
                             </Container>

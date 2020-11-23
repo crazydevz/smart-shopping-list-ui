@@ -22,6 +22,13 @@ const loadListsSuccess = loadedLists => {
     };
 };
 
+export const shareListStart = listId => {
+    return {
+        type: 'SHARE_LIST_START',
+        payload: listId
+    };
+};
+
 async function createList(authToken, listName, callback) {
     callback(createListStart());
     try {
@@ -31,7 +38,7 @@ async function createList(authToken, listName, callback) {
             data: { list_name: listName },
             headers: { 'x-auth': authToken }
         });
-        if(!response) return console.log('Request failed!');
+        if (!response) return console.log('Request failed!');
 
         const responseData = response.data.savedList;
 
@@ -61,7 +68,7 @@ async function deleteList(authToken, listId, callback) {
         const response = await axios({
             method: 'delete',
             url: `${PATH_API_SERVER}/shoppingLists/${listId}`,
-            headers: {'x-auth': authToken}
+            headers: { 'x-auth': authToken }
         });
         if (!response) return console.log('Request failed!');
     } catch (e) {
@@ -75,18 +82,18 @@ export const deleteRemotelist = (authToken, listId) => {
     };
 };
 
-async function loadList(authToken, callback) {
+async function loadLists(authToken, callback) {
     try {
         const response = await axios({
             method: 'get',
             url: `${PATH_API_SERVER}/shoppingLists`,
-            headers: {'x-auth': authToken}
+            headers: { 'x-auth': authToken }
         });
-        if(!response) return console.log('Request failed');
+        if (!response) return console.log('Request failed');
 
         const responseData = response.data;
 
-        loadedLists = responseData.myLists;
+        const loadedLists = responseData.myLists;
         callback(loadListsSuccess(loadedLists));
     } catch (e) {
         console.log(e);
@@ -95,8 +102,28 @@ async function loadList(authToken, callback) {
 
 export const loadRemoteLists = (authToken) => {
     return async (dispatch, getState) => {
-        await loadList(authToken, dispatch);
+        await loadLists(authToken, dispatch);
         stateAfter = getState();
         return stateAfter.list.loadedLists;
+    };
+};
+
+async function _shareList(authToken, listId, shareeUsername) {
+    try {
+        const response = await axios({
+            method: 'PATCH',
+            url: `${PATH_API_SERVER}/shoppingLists/shareList/${listId}`,
+            data: { username: shareeUsername },
+            headers: { 'x-auth': authToken }
+        });
+        if (!response) return console.log('Request failed!');
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export const shareList = (authToken, listId, shareeUsername) => {
+    return async () => {
+        await _shareList(authToken, listId, shareeUsername);
     };
 };

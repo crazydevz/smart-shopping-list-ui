@@ -8,10 +8,11 @@ import { updateItemStart } from '../actions/listItem';
 const ListItem = props => {
     const updateItem = () => {
         const itemData = {
+            itemId: props.itemKey,
             itemName: props.itemVal.itemName,
             itemPrice: props.itemVal.itemPrice,
             itemQuantity: props.itemVal.itemQuantity,
-            itemId: props.itemKey
+            availableItemQuantity: props.itemVal.availableItemQuantity
         };
         props.dispatch(updateItemStart(itemData));
         props.setUpdateMode(true);
@@ -26,19 +27,19 @@ const ListItem = props => {
                     <Text style={styles.itemNameText}>{props.itemVal.itemName}</Text>
                 </View>
                 <View style={styles.itemData}>
-                    <Text>${props.itemVal.itemPrice}</Text>
+                    <Text>Rs {props.itemVal.itemPrice}</Text>
                 </View>
                 <View style={styles.itemData}>
-                    <Text>{props.itemVal.itemQuantity}</Text>
+                    <Text>{props.itemVal.availableItemQuantity}/{props.itemVal.itemQuantity}</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.options} onPress={() => props.onDelete(props.itemKey)}>
+            <View style={styles.options} >
                 <IconButton
                     icon="delete"
                     size={20}
                     onPress={() => props.onDelete(props.itemKey)}
                 />
-            </TouchableOpacity>
+            </View>
         </Surface>
     );
 };
