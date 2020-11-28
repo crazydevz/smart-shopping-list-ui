@@ -9,6 +9,7 @@ import Container from '../components/Container';
 import ListNameInput from '../components/ListNameInput';
 import ShareListModal from '../components/ShareListModal';
 import List from '../components/List';
+import ListsMore from '../components/ListsMore';
 import { userSignout } from '../actions/user';
 import { createRemoteList, deleteRemotelist, loadRemoteLists, shareList } from '../actions/list';
 
@@ -108,7 +109,7 @@ const Lists = props => {
             <Appbar.Header>
                 <Appbar.Action icon='menu' />
                 <Appbar.Content title='My Lists' />
-                <Appbar.Action icon='power' onPress={handleSignout} />
+                <ListsMore onSignout={handleSignout} />
             </Appbar.Header>
             <Container>
                 <View style={{ width: '100%', flex: 1 }}>

@@ -7,6 +7,7 @@ import Container from '../components/Container';
 // import ListItemInput from '../components/ListItemInput';
 import ReceivedListItem from '../components/ReceivedListItem';
 import ListItemUpdate from '../components/ListItemUpdate';
+import ReceivedListItemsMore from '../components/ReceivedListItemsMore';
 import { updateReceivedListItem } from '../actions/receivedListItem';
 // import { createRemoteListItem, deleteRemoteListItem, updateRemoteListItem } from '../actions/listItem';
 
@@ -93,6 +94,10 @@ const ReceivedListItems = props => {
         }
     };
 
+    const handleUnshareList = () => {
+        props.location.state.onUnshareList(props.location.state.listKey)
+    };
+
     useEffect(() => {
         !props.user.isAuthenticated && props.history.push('/Signin');
     });
@@ -106,7 +111,7 @@ const ReceivedListItems = props => {
             <Appbar.Header>
                 <Appbar.BackAction onPress={() => props.history.push('/ReceivedLists')} />
                 <Appbar.Content title={props.location.state.listName} subtitle={`Shared by ${props.location.state.creatorUsername}`} />
-                <Appbar.Content title='Unshare' onPress={() => props.location.state.onUnshareList(props.location.state.listKey)} />
+                <ReceivedListItemsMore onUnshareList={handleUnshareList} />
             </Appbar.Header>
             <Container>
                 {/* <ListItemInput

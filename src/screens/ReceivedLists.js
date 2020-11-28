@@ -37,7 +37,7 @@ const ReceivedLists = props => {
         (async () => {
             await props.dispatch(unshareReceivedList(props.user.authToken, listKey));
         })();
-        props.history.push('/OutgoingLists');
+        props.history.push('/ReceivedLists');
     };
 
     // const handleRejectList = listKey => {

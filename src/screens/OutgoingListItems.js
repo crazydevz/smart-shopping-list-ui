@@ -7,6 +7,7 @@ import Container from '../components/Container';
 import ListItemInput from '../components/ListItemInput';
 import ListItem from '../components/ListItem';
 import ListItemUpdate from '../components/ListItemUpdate';
+import OutgoingListItemsMore from '../components/OutgoingListItemsMore';
 import { createRemoteListItem, deleteRemoteListItem, updateRemoteListItem } from '../actions/listItem';
 
 const OutgoingListItems = props => {
@@ -92,6 +93,10 @@ const OutgoingListItems = props => {
         }
     };
 
+    const handleCancelShareList = () => {
+        // props.location.state.onUnshareList(props.location.state.listKey);
+    };
+
     useEffect(() => {
         !props.user.isAuthenticated && props.history.push('/Signin');
     });
@@ -105,7 +110,8 @@ const OutgoingListItems = props => {
             <Appbar.Header>
                 <Appbar.BackAction onPress={() => props.history.push('/Outgoinglists')} />
                 <Appbar.Content title={props.location.state.listName} subtitle={`Sent to ${props.location.state.shareeUsername}`} />
-                <Appbar.Content title='Cancel' onPress={() => props.location.state.onUnshareList(props.location.state.listKey)} />
+                {/* <OutgoingListItemsMore onCancelShareList={() => {}} /> */}
+                <Appbar.Action icon={<OutgoingListItemsMore onCancelShareList={() => {}} />} />
             </Appbar.Header>
             <Container>
                 <ListItemInput

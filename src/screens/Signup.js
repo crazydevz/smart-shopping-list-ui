@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TextInputComponent, View } from 'react-native';
 import { Button, Title, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 
@@ -43,6 +43,7 @@ const Signup = props => {
                     </Title>
                     <View style={styles.textInputContainer}>
                         <TextInput
+                            left={<TextInput.Icon name='email' />}
                             style={styles.textInput}
                             mode='outlined'
                             label='Email'
@@ -51,6 +52,7 @@ const Signup = props => {
                             onChangeText={handleEmailInput}
                         />
                         <TextInput
+                            left={<TextInput.Icon name='account' />}
                             style={styles.textInput}
                             mode='outlined'
                             label='Username'
@@ -59,6 +61,7 @@ const Signup = props => {
                             onChangeText={handleUsernameInput}
                         />
                         <TextInput
+                            left={<TextInput.Icon name='lock' />}
                             secureTextEntry
                             style={styles.textInput}
                             mode='outlined'

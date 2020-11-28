@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Container from '../components/Container';
 // import ListItemInput from '../components/ListItemInput';
 import ReadOnlyListItem from '../components/ReadOnlyListItem';
+import SharedListItemsMore from '../components/SharedListItemsMore';
 // import ListItemUpdate from '../components/ListItemUpdate';
 // import { createRemoteListItem, deleteRemoteListItem, updateRemoteListItem } from '../actions/listItem';
 
@@ -94,6 +95,10 @@ const SharedListItems = props => {
         }
     };
 
+    const handleUnshareList = () => {
+        props.location.state.onUnshareList(props.location.state.listKey)
+    };
+
     useEffect(() => {
         !props.user.isAuthenticated && props.history.push('/Signin');
     });
@@ -107,7 +112,7 @@ const SharedListItems = props => {
             <Appbar.Header>
                 <Appbar.BackAction onPress={() => props.history.push('/SharedLists')} />
                 <Appbar.Content title={props.location.state.listName} subtitle={`Shared with ${props.location.state.shareeUsername}`} />
-                <Appbar.Content title='Unshare' onPress={() => props.location.state.onUnshareList(props.location.state.listKey)} />
+                <SharedListItemsMore onUnshareList={handleUnshareList} />
             </Appbar.Header>
             <Container>
                 {/* <ListItemInput

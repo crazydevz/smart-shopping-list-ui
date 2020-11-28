@@ -48,10 +48,12 @@ const ListItemUpdate = props => {
     };
 
     useEffect(() => {
-        setItemName(props.itemName);
-        setItemPrice(props.itemPrice);
-        setItemQuantity(props.itemQuantity);
-        setAvailableItemQuantity(props.availableItemQuantity);
+        if(props.visible) {
+            setItemName(props.itemName);
+            setItemPrice(props.itemPrice);
+            setItemQuantity(props.itemQuantity);
+            setAvailableItemQuantity(props.availableItemQuantity);
+        }
     }, [props.visible]);
 
     return (

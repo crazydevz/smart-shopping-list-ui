@@ -5,11 +5,16 @@ import { withRouter } from 'react-router-native';
 import { connect } from 'react-redux';
 
 import { shareListStart } from '../actions/list';
+import ListMore from '../components/ListMore';
 
 const List = props => {
     const handleShareList = () => {
         props.dispatch(shareListStart(props.listKey));
         props.setShareMode(true);
+    };
+
+    const handleDeleteList = () => {
+        props.onDelete(props.listKey);
     };
 
     return (
@@ -34,12 +39,16 @@ const List = props => {
                 </View>
             </TouchableOpacity>
             <View style={styles.options}>
-                <IconButton
+                <ListMore 
+                    onDeleteList={handleDeleteList}
+                    onShareList={handleShareList}
+                />
+                {/* <IconButton
                     icon="delete"
                     size={20}
                     // onPress={() => props.onDelete(props.listKey)}
                     onPress={handleShareList}
-                />
+                /> */}
             </View>
         </Surface>
     );

@@ -7,6 +7,7 @@ import Container from '../components/Container';
 import ListItemInput from '../components/ListItemInput';
 import ListItem from '../components/ListItem';
 import ListItemUpdate from '../components/ListItemUpdate';
+import OutgoingListItemsMore from '../components/OutgoingListItemsMore';
 import { createRemoteListItem, deleteRemoteListItem, updateRemoteListItem } from '../actions/listItem';
 
 const ListItems = props => {
@@ -28,7 +29,7 @@ const ListItems = props => {
         setAddMode(false);
     };
 
-    const handleUpdateLocalItem = ({ itemId, itemName, itemPrice, itemQuantity, availableItemQuantity }) => {
+    const handleUpdateLocalItem = ({ itemId, itemName, itemPrice, itemQuantity, availableItemQuantity = 0 }) => {
         const updatedItem = { itemId, itemName, itemPrice, itemQuantity, availableItemQuantity };
         // Delete old list item from list items list
         setItems(currentItems => {
@@ -45,7 +46,7 @@ const ListItems = props => {
     };
 
     // handleUpdateItem
-    const handleUpdateItem = ({ itemId, itemName, itemPrice, itemQuantity, availableItemQuantity }) => {
+    const handleUpdateItem = ({ itemId, itemName, itemPrice, itemQuantity, availableItemQuantity = 0 }) => {
         const item = {
             item_name: itemName,
             price_per_item: itemPrice,
@@ -114,7 +115,7 @@ const ListItems = props => {
                 <Appbar.Header>
                     <Appbar.BackAction onPress={() => props.history.push('/Outgoinglists')} />
                     <Appbar.Content title={props.location.state.listName} subtitle={`Sent to ${props.location.state.shareeUsername}`} />
-                    <Appbar.Content title='Cancel' onPress={() => props.location.state.onUnshareList(props.location.state.listKey)} />
+                    <OutgoingListItemsMore onCancelShareList={() => {}} />
                 </Appbar.Header>
             }
             <Container>

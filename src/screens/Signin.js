@@ -36,35 +36,37 @@ const Signin = props => {
                     <Title style={styles.title}>
                         Signin
                     </Title>
-                    <View style={styles.textInputContainer}>
-                        <TextInput
-                            style={styles.textInput}
-                            mode='outlined'
-                            label='Username/Email'
-                            placeholder='abc@gmail.com'
-                            value={emailOrUsername}
-                            onChangeText={handleEmailOrUsernameInput}
-                        />
-                        <TextInput
-                            secureTextEntry
-                            style={styles.textInput}
-                            mode='outlined'
-                            label='Password'
-                            placeholder='********'
-                            value={password}
-                            onChangeText={handlePasswordInput}
-                        />
-                    </View>
-                    <View style={styles.buttonContainer}>
-                        <Button style={styles.button} mode="contained" onPress={handleSignin}>
-                            signin
-                        </Button>
-                        <Button style={styles.button} mode="outlined" onPress={() => props.history.push('/')}>
-                            signup instead
-                        </Button>
-                    </View>
+                <View style={styles.textInputContainer}>
+                    <TextInput
+                        left={<TextInput.Icon name='account' />}
+                        style={styles.textInput}
+                        mode='outlined'
+                        label='Username/Email'
+                        placeholder='abc@gmail.com'
+                        value={emailOrUsername}
+                        onChangeText={handleEmailOrUsernameInput}
+                    />
+                    <TextInput
+                        left={<TextInput.Icon name='lock' />}
+                        secureTextEntry
+                        style={styles.textInput}
+                        mode='outlined'
+                        label='Password'
+                        placeholder='********'
+                        value={password}
+                        onChangeText={handlePasswordInput}
+                    />
                 </View>
-            </Container>
+                <View style={styles.buttonContainer}>
+                    <Button style={styles.button} mode="contained" onPress={handleSignin}>
+                        signin
+                        </Button>
+                    <Button style={styles.button} mode="outlined" onPress={() => props.history.push('/')}>
+                        signup instead
+                        </Button>
+                </View>
+                </View>
+            </Container >
     );
 };
 
@@ -84,6 +86,9 @@ const styles = StyleSheet.create({
         height: '70%',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    logo: {
+        marginVertical: 20,
     },
     title: {
         fontSize: 30,
