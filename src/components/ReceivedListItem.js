@@ -30,7 +30,7 @@ const ListItem = props => {
                     <Text>Rs {props.itemVal.itemPrice}</Text>
                 </View>
                 <View style={styles.itemData}>
-                    <Text>{props.itemVal.availableItemQuantity}{props.itemVal.itemQuantity}</Text>
+                    <Text>{props.itemVal.availableItemQuantity}/{props.itemVal.itemQuantity}</Text>
                 </View>
             </TouchableOpacity>
             {/* <View style={styles.options} >
