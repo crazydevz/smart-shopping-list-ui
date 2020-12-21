@@ -1,7 +1,7 @@
 export default ComparatorData = [
   {
     id: 1,
-    brandName: "Q mobile",
+    brandName: "Taha Mall",
     mobile: "Q9 pro",
     price: " 2000",
     save: "100",
@@ -10,7 +10,7 @@ export default ComparatorData = [
   },
   {
     id: 2,
-    brandName: "Q mobile",
+    brandName: "Giga Mart",
     mobile: "Q9 pro",
     price: " 2000",
     save: "100",
@@ -19,7 +19,7 @@ export default ComparatorData = [
   },
   {
     id: 3,
-    brandName: "Q mobile",
+    brandName: "GM Mart",
     mobile: "Q9 pro",
     price: " 2000",
     save: "100",
@@ -28,7 +28,7 @@ export default ComparatorData = [
   },
   {
     id: 4,
-    brandName: "Q mobile",
+    brandName: "Dubai Plaza",
     mobile: "Q9 pro",
     price: " 2000",
     save: "100",
@@ -37,7 +37,7 @@ export default ComparatorData = [
   },
   {
     id: 5,
-    brandName: "Q mobile",
+    brandName: "Akhtar Plaza",
     mobile: "Q9 pro",
     price: " 2000",
     save: "100",

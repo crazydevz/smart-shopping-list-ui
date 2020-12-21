@@ -1,6 +1,6 @@
 export default {
     // primary: 'rgb(40, 25, 59)',
-    // secondary: '#a366ff'
+    // secondary: '##230FE9'
     primary: '#FFFFFF',
-    secondary: '#230FE9'
+    secondary: '#162947'
 }

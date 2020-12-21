@@ -158,8 +158,8 @@ const Map = props => {
                         <Avatar.Icon size={35} icon='folder' />
                     </View>
                     <View style={styles.profileInfo}>
-                        <Text>Full Name</Text>
-                        <Text>Username</Text>
+                        <Text>Fahad Tahir</Text>
+                        <Text>Fahad</Text>
                     </View>
                 </TouchableOpacity>
                 <View style={styles.profileRating}>
