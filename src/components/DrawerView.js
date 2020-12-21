@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { View } from 'react-native';
 import { Drawer } from 'react-native-paper';
 import { withRouter } from 'react-router-native';
 
@@ -30,8 +31,28 @@ const DrawerView = props => {
         props.history.push('/SharedLists');
     };
 
+    // const handleGoToShareeOnMap = () => {
+    //     setIsActive('shareeOnMap');
+    //     props.history.push('/ShareeOnMap');
+    // };
+
+    // const handleGoToSharerOnMap = () => {
+    //     setIsActive('sharerOnMap');
+    //     props.history.push('/SharerOnMap');
+    // };
+    
+    const handleGoToDeliveryRequests = () => {
+        setIsActive('deliveryRequests');
+        props.history.push('/DeliveryRequests');
+    };
+
+    const handleGoToPriceComparator = () => {
+        setIsActive('priceComparator');
+        props.history.push('/PriceComparator');
+    };
+
     return (
-        <Drawer.Section style={{ marginTop: 50 }}>
+        <View style={{ flex: 1, width: '100%', marginTop: 80 }}>
             <Drawer.Item
                 label="My Lists"
                 active={isActive === 'myLists'}
@@ -47,7 +68,7 @@ const DrawerView = props => {
                     label="Outgoing Requests"
                     active={isActive === 'outgoingLists'}
                     onPress={handleGoToOutgoingLists}
-                    />
+                />
             </Drawer.Section>
             <Drawer.Section title='Shared Lists'>
                 <Drawer.Item
@@ -61,7 +82,31 @@ const DrawerView = props => {
                     onPress={handleGoToSharedLists}
                 />
             </Drawer.Section>
-        </Drawer.Section>
+            <Drawer.Section title='List Delivery'>
+                {/* <Drawer.Item
+                    label="Sharees On Map"
+                    active={isActive === 'shareeOnMap'}
+                    onPress={handleGoToShareeOnMap}
+                /> */}
+                {/* <Drawer.Item
+                    label="Sharer On Map"
+                    active={isActive === 'sharerOnMap'}
+                    onPress={handleGoToSharerOnMap}
+                /> */}
+                <Drawer.Item
+                    label="Delivery Requests"
+                    active={isActive === 'deliveryRequests'}
+                    onPress={handleGoToDeliveryRequests}
+                />
+            </Drawer.Section>
+            <Drawer.Section title='Other'>
+                <Drawer.Item
+                    label="Price Comparator"
+                    active={isActive === 'priceComparator'}
+                    onPress={handleGoToPriceComparator}
+                />
+            </Drawer.Section>
+        </View>
     );
 };
 

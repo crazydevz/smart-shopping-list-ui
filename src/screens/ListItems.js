@@ -96,6 +96,10 @@ const ListItems = props => {
         }
     };
 
+    const handleCancelShareList = () => {
+        props.location.state.onUnshareList(props.location.state.listKey);
+    };
+
     useEffect(() => {
         !props.user.isAuthenticated && props.history.push('/Signin');
     });
@@ -115,7 +119,7 @@ const ListItems = props => {
                 <Appbar.Header>
                     <Appbar.BackAction onPress={() => props.history.push('/Outgoinglists')} />
                     <Appbar.Content title={props.location.state.listName} subtitle={`Sent to ${props.location.state.shareeUsername}`} />
-                    <OutgoingListItemsMore onCancelShareList={() => {}} />
+                    <OutgoingListItemsMore onCancelShareList={handleCancelShareList} />
                 </Appbar.Header>
             }
             <Container>

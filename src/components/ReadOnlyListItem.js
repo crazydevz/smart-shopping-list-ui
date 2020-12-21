@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { IconButton, Surface, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
 
-import { updateItemStart } from '../actions/listItem';
+// import { updateItemStart } from '../actions/listItem';
 
 const ListItem = props => {
     // const updateItem = () => {

@@ -86,13 +86,14 @@ const Signup = props => {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        width: '100%',
+        width: '45%',
         marginVertical: 20,
         alignItems: 'center',
         justifyContent: 'center',
     },
     button: {
-        width: '45%',
+        width: '100%',
+        paddingVertical: 5,
         marginVertical: 10,
     },
     contentContainer: {

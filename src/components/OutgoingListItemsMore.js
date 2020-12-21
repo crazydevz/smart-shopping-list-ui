@@ -20,7 +20,7 @@ const OutgoingListItemsMore = (props) => {
             <Menu
                 visible={visible}
                 onDismiss={closeMenu}
-                anchor={<IconButton icon={MORE_ICON} size={20} onPress={openMenu} />}
+                anchor={<IconButton icon={MORE_ICON} color='white' size={20} onPress={openMenu} />}
             >
                 <Menu.Item onPress={handleCancelShareList} title="Cancel Request" />
             </Menu>

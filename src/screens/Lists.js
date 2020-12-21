@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { Appbar, FAB, Menu, Text } from 'react-native-paper';
+import { Appbar, FAB, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 // import DrawerView from '../components/DrawerView';
@@ -117,7 +117,7 @@ const Lists = props => {
                         <ActivityIndicator />
                         :
                         <View style={{ width: '100%', flex: 1 }}>
-                            {(lists.length == 0) ?
+                            {(lists.length === 0) ?
                                 <Container>
                                     <Text>
                                         It looks empty here.

@@ -13,6 +13,10 @@ const List = props => {
         props.setShareMode(true);
     };
 
+    const handleShareListNearby = () => {
+        props.history.push('/ShareeOnMap');
+    };
+
     const handleDeleteList = () => {
         props.onDelete(props.listKey);
     };
@@ -42,6 +46,7 @@ const List = props => {
                 <ListMore 
                     onDeleteList={handleDeleteList}
                     onShareList={handleShareList}
+                    onShareListNearby={handleShareListNearby}
                 />
                 {/* <IconButton
                     icon="delete"

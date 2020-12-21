@@ -39,7 +39,7 @@ async function _unshareOutgoingList(authToken, listId) {
     try {
         const response = await axios({
             method: 'patch',
-            url: `${PATH_API_SERVER}/shoppingLists/unshareList/${listId}`,
+            url: `${PATH_API_SERVER}/shoppingLists/requests/outgoing/cancelRequest/${listId}`,
             headers: { 'x-auth': authToken }
         });
         if (!response) return console.log('Request failed');

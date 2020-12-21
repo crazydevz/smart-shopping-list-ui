@@ -9,7 +9,7 @@ import ReadOnlyListItem from '../components/ReadOnlyListItem';
 // import ListItemUpdate from '../components/ListItemUpdate';
 // import { createRemoteListItem, deleteRemoteListItem, updateRemoteListItem } from '../actions/listItem';
 
-const IncomingListItems = props => {
+const DeliveryRequestContents = props => {
     const [items, setItems] = useState([]);
     // const [isAddMode, setAddMode] = useState(false);
     // const [isUpdateMode, setUpdateMode] = useState(false);
@@ -105,7 +105,7 @@ const IncomingListItems = props => {
     return (
         <View style={{ width: '100%', flex: 1 }}>
             <Appbar.Header>
-                <Appbar.BackAction onPress={() => props.history.push('/IncomingLists')} />
+                <Appbar.BackAction onPress={() => props.history.push('/DeliveryRequests')} />
                 <Appbar.Content title={props.location.state.listName} subtitle={`Sent by ${props.location.state.creatorUsername}`} />
             </Appbar.Header>
             <Container>
@@ -128,7 +128,7 @@ const IncomingListItems = props => {
                                 <Container>
                                     <Text>
                                         No items in this list
-                                </Text>
+                                    </Text>
                                 </Container>
                                 :
                                 <View style={{ flex: 1, width: '100%' }}>
@@ -144,8 +144,9 @@ const IncomingListItems = props => {
                                             />
                                         )}
                                     />
+                                    <Button style={{ width: '100%' }} mode='outlined' onPress={() => { props.history.push('/SharerOnMap') }} >View Delivery Location</Button>
                                     <View style={styles.buttonContainer}>
-                                        <Button style={styles.button} mode="contained" onPress={() => props.location.state.onAcceptList(props.location.state.listKey)}>
+                                        <Button style={styles.button} mode="contained" onPress={() => props.location.state.onAcceptList(props.location.state.listKey, {src_lat: 30, src_long: 45})}>
                                             accept
                                         </Button>
                                         <Button style={styles.button} mode="outlined" onPress={() => props.location.state.onRejectList(props.location.state.listKey)}>
@@ -199,4 +200,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(IncomingListItems);
+export default connect(mapStateToProps)(DeliveryRequestContents);

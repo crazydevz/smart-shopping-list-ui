@@ -1,5 +1,5 @@
 import React from 'react';
-import { DrawerLayoutAndroid, View } from 'react-native';
+import { DrawerLayoutAndroid } from 'react-native';
 
 import DrawerView from '../components/DrawerView';
 

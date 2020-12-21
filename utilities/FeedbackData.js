@@ -1,0 +1,51 @@
+export default FeedbackData = [
+  {
+    id: 1,
+    img: "../utilities/person.jpg",
+    name: "Muhammad Ali",
+    Ratings: 3,
+    comment: "Nice person",
+  },
+  {
+    id: 2,
+    img: "../utilities/person.jpg",
+    name: "Imran Ahmad",
+    Ratings: 4,
+    comment: "Nice person",
+  },
+  {
+    id: 3,
+    img: "../utilities/person.jpg",
+    name: "Sohaib Ahmad",
+    Ratings: 5,
+    comment: "Nice person",
+  },
+  {
+    id: 4,
+    img: "../utilities/person.jpg",
+    name: "Shakeel Murtaza",
+    Ratings: 3,
+    comment: "Nice person",
+  },
+  {
+    id: 5,
+    img: "../utilities/person.jpg",
+    name: "Tahir Ahmad",
+    Ratings: 2,
+    comment: "Nice person",
+  },
+  {
+    id: 6,
+    img: "../utilities/person.jpg",
+    name: "Kashif Ali",
+    Ratings: 5,
+    comment: "Nice person",
+  },
+  {
+    id: 7,
+    img: "../utilities/person.jpg",
+    name: "Abdullah",
+    Ratings: 5,
+    comment: "Nice person",
+  },
+];

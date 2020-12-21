@@ -20,6 +20,11 @@ const ListMore = (props) => {
         props.onDeleteList();
     };
 
+    const handleShareListNearby = () => {
+        closeMenu();
+        props.onShareListNearby();
+    };
+
     return (
         <View>
             <Menu
@@ -31,6 +36,7 @@ const ListMore = (props) => {
                 <Menu.Item onPress={handleDeleteList} title="Delete" />
                 <Divider />
                 <Menu.Item onPress={handleShareList} title="Share" />
+                <Menu.Item onPress={handleShareListNearby} title="Share Nearby" />
             </Menu>
         </View>
     );
