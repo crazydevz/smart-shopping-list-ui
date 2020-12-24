@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
 import { Appbar, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-native';
 
 import Container from '../components/Container';
-import CustomDrawer from '../components/CustomDrawer';
+// import CustomDrawer from '../components/CustomDrawer';
 import DeliveryRequest from '../components/DeliveryRequest';
 // import { acceptList, rejectList, loadIncomingLists } from '../actions/incomingList';
 import { acceptDeliveryRequest, rejectDeliveryRequest, loadDeliveryRequests } from '../actions/deliveryRequest';
@@ -59,7 +60,7 @@ const DeliveryRequests = props => {
     }, []);
 
     return (
-        <CustomDrawer>
+        <View style={{ width: '100%', flex: 1}}>
             <Appbar.Header>
                 <Appbar.Action icon='menu' onPress={() => props.history.push('/Lists')} />
                 <Appbar.Content title='Delivery Requests' />
@@ -94,7 +95,7 @@ const DeliveryRequests = props => {
                     }
                 </View>
             </Container>
-        </CustomDrawer>
+        </View>
     );
 };
 
@@ -110,4 +111,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(DeliveryRequests);
+export default connect(mapStateToProps)(withRouter(DeliveryRequests));

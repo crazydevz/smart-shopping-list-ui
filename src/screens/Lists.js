@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { Appbar, FAB, Text } from 'react-native-paper';
+import { Appbar, FAB, Snackbar, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
 
-// import DrawerView from '../components/DrawerView';
 import CustomDrawer from '../components/CustomDrawer';
 import Container from '../components/Container';
 import ListNameInput from '../components/ListNameInput';
@@ -17,6 +16,9 @@ const Lists = props => {
     const [lists, setLists] = useState([]);
     const [isAddMode, setAddMode] = useState(false);
     const [isShareMode, setShareMode] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const onToggleSnackBar = () => setVisible(!visible);
+    const onDismissSnackBar = () => setVisible(false);
 
     const handleCreateList = listName => {
         (async () => {
@@ -85,6 +87,10 @@ const Lists = props => {
         })();
     };
 
+    const handleInvokeSnackbar = () => {
+        onToggleSnackBar();
+    };
+
     useEffect(() => {
         !props.user.isAuthenticated && props.history.push('/Signin');
     });
@@ -105,6 +111,7 @@ const Lists = props => {
                 visible={isShareMode}
                 onShareList={handleShareList}
                 onCancel={cancelShareList}
+                onInvokeSnackbar={handleInvokeSnackbar}
             />
             <Appbar.Header>
                 <Appbar.Action icon='menu' />
@@ -140,6 +147,12 @@ const Lists = props => {
                                         />
                                     )}
                                 />}
+                                <Snackbar
+                                    visible={visible}
+                                    onDismiss={onDismissSnackBar}
+                                >
+                                    Request sent!
+                                </Snackbar>
                         </View>
                     }
                 </View>

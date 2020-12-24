@@ -23,7 +23,7 @@ const Feedback = (props) => {
         <>
             <ScrollView>
                 <Appbar.Header>
-                    <Appbar.BackAction onPress={() => { props.history.push('/SharerOnMap') }} />
+                    <Appbar.BackAction onPress={() => { props.history.push('/UserProfile') }} />
                     <Appbar.Content title='Provide Feedback' />
                 </Appbar.Header>
                 <View style={styles.personContainer}>

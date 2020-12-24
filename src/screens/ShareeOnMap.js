@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Appbar, Avatar, Button, IconButton, Surface, Text } from 'react-native-paper';
+import { Appbar, Avatar, Button, Divider, IconButton, Surface, Text } from 'react-native-paper';
 import MapView, { Marker } from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import Polyline from '@mapbox/polyline';
+import { withRouter } from 'react-router-native';
 
 import Container from '../components/Container';
 import Rating from '../components/Rating';
@@ -112,63 +113,82 @@ const Map = props => {
                 <Appbar.Content title='Sharee Locations' />
             </Appbar.Header>
             {(location.latitude && location.longitude) ?
-                <MapView
-                    showsUserLocation
-                    style={styles.map}
-                    initialRegion={initialRegion}
-                    onRegionChange={handleRegionChange}
-                >
-                    {(region.latitude && region.longitude) &&
-                        <Marker
-                            draggable
-                            coordinate={region}
-                            title={'me'}
-                            description={'my location'}
-                            onDragEnd={(e) => handleRegionChange(e.nativeEvent.coordinate)}
-                        />
-                    }
-                    {(destinationLocation.latitude && destinationLocation.longitude) &&
-                        <Marker
-                            coordinate={destinationLocation}
-                            title={'sharee'}
-                            description={'sharee\'s location'}
-                            image={require('../../assets/custom-marker.png')}
-                        />
-                    }
-                    {(destinationLocation.latitude && destinationLocation.longitude) &&
-                        <MapView.Polyline
-                            strokeWidth={2}
-                            strokeColor='red'
-                            coordinates={coords}
-                        /> 
-                    }
-                </MapView>
+                <View style={{width: '100%', flex: 1}}>
+                    <MapView
+                        showsUserLocation
+                        style={styles.map}
+                        initialRegion={initialRegion}
+                        onRegionChange={handleRegionChange}
+                    >
+                        {(region.latitude && region.longitude) &&
+                            <Marker
+                                draggable
+                                coordinate={region}
+                                title={'me'}
+                                description={'my location'}
+                                onDragEnd={(e) => handleRegionChange(e.nativeEvent.coordinate)}
+                            />
+                        }
+                        {(destinationLocation.latitude && destinationLocation.longitude) &&
+                            <Marker
+                                coordinate={destinationLocation}
+                                title={'sharee'}
+                                description={'sharee\'s location'}
+                                image={require('../../assets/custom-marker.png')}
+                            />
+                        }
+                        {(destinationLocation.latitude && destinationLocation.longitude) &&
+                            <MapView.Polyline
+                                strokeWidth={2}
+                                strokeColor='red'
+                                coordinates={coords}
+                            />
+                        }
+                    </MapView>
+                    <Surface style={styles.card}>
+                        <View style={styles.cardUpperPart}>
+                            <View style={styles.cardUpperPartItem}>
+                                <Text style={{ textAlign: 'center' }}>3 km away</Text>
+                            </View>
+                            <View style={styles.cardUpperPartItem}>
+                                <Text style={{ textAlign: 'center' }}>Estimated fair: Rs 300</Text>
+                            </View>
+                        </View>
+                        <Divider />
+                        <View style={styles.profileCard}>
+                            <TouchableOpacity
+                                style={styles.profileCardLeftPart}
+                                onPress={() => props.history.push(
+                                    {
+                                        pathname: '/UserProfile',
+                                        state: {
+                                            previousScreen: '/ShareeOnMap'
+                                        }
+                                    }
+                                )}
+                            >
+                                <View style={styles.avatarIcon}>
+                                    <Avatar.Icon size={35} icon='folder' />
+                                </View>
+                                <View style={styles.profileInfo}>
+                                    <Text>Sajid Ali</Text>
+                                    <Text>sajid21</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <View style={styles.profileRating}>
+                                <Rating rating={3} />
+                            </View>
+                        </View>
+                    </Surface>
+                    <Button style={styles.shareListBtn} mode='contained' onPress={() => { console.log('Button pressed') }}>
+                        share list
+                    </Button>
+                </View>
                 :
                 <Container>
                     <Text>Loading..</Text>
                 </Container>
             }
-            <Surface style={styles.profileCard}>
-                <TouchableOpacity
-                    style={styles.profileCardLeftPart}
-                    onPress={() => props.history.push('/ViewFeedback')}
-                >
-
-                    <View style={styles.avatarIcon}>
-                        <Avatar.Icon size={35} icon='folder' />
-                    </View>
-                    <View style={styles.profileInfo}>
-                        <Text>Sajid Ali</Text>
-                        <Text>sajid21</Text>
-                    </View>
-                </TouchableOpacity>
-                <View style={styles.profileRating}>
-                    <Rating rating={3} />
-                </View>
-            </Surface>
-            <Button style={styles.shareListBtn} mode='contained' onPress={() => {console.log('Button pressed')}}>
-                share list
-            </Button>
         </View>
     );
 };
@@ -183,17 +203,29 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
     },
-    profileCard: {
+    card: {
         padding: 8,
         height: 80,
         width: '100%',
+        elevation: 4,
+    },
+    cardUpperPart: {
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        elevation: 4,
+        flexDirection: 'row',
+    },
+    cardUpperPartItem: {
+        flex: 1,
+    },
+    profileCard: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'row',
     },
     profileCardLeftPart: {
-        flex: 2,
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -214,4 +246,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Map;
+export default withRouter(Map);

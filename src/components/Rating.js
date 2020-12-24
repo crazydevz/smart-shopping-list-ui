@@ -6,7 +6,7 @@ const Rating = props => {
     let stars = [];
 
     for (let i = 0; i < 5; i++) {
-        if(i <= props.rating) {
+        if(i < props.rating) {
             stars.push(<IconButton icon='star' size={15} key={i} />);
         }
         else {
@@ -17,7 +17,7 @@ const Rating = props => {
     return (
         <View style={styles.rating}>
             <View style={styles.ratingNumber}>
-                <Text>4</Text>
+                <Text>{props.rating} stars</Text>
             </View>
             <View style={styles.stars}>
                 {stars}

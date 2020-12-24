@@ -41,9 +41,14 @@ const DrawerView = props => {
     //     props.history.push('/SharerOnMap');
     // };
     
-    const handleGoToDeliveryRequests = () => {
-        setIsActive('deliveryRequests');
-        props.history.push('/DeliveryRequests');
+    // const handleGoToDeliveryRequests = () => {
+    //     setIsActive('deliveryRequests');
+    //     props.history.push('/DeliveryRequests');
+    // };
+
+    const handleGoToDelivery = () => {
+        setIsActive('delivery');
+        props.history.push('/Delivery');
     };
 
     const handleGoToPriceComparator = () => {
@@ -93,10 +98,15 @@ const DrawerView = props => {
                     active={isActive === 'sharerOnMap'}
                     onPress={handleGoToSharerOnMap}
                 /> */}
-                <Drawer.Item
+                {/* <Drawer.Item
                     label="Delivery Requests"
                     active={isActive === 'deliveryRequests'}
                     onPress={handleGoToDeliveryRequests}
+                /> */}
+                <Drawer.Item
+                    label="Delivery"
+                    active={isActive === 'delivery'}
+                    onPress={handleGoToDelivery}
                 />
             </Drawer.Section>
             <Drawer.Section title='Other'>

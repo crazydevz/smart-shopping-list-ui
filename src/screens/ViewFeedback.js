@@ -43,7 +43,7 @@ const ViewFeedback = (props) => {
   return (
     <View>
       <Appbar.Header>
-        <Appbar.BackAction onPress={() => { props.history.push('/ShareeOnMap') }} />
+        <Appbar.BackAction onPress={() => { props.history.push('/UserProfile') }} />
         <Appbar.Content title='User Feedback' />
       </Appbar.Header>
       <FlatList

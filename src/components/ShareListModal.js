@@ -12,6 +12,7 @@ const ShareListModal = props => {
 
     const handleShareList = () => {
         props.onShareList(props.listId, username);
+        props.onInvokeSnackbar();
         setUsername('');
     };
 

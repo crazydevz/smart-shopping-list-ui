@@ -13,7 +13,8 @@ import ReceivedListsScreen from '../screens/ReceivedLists';
 import ReceivedListItemsScreen from '../screens/ReceivedListItems';
 import SharedListsScreen from '../screens/SharedLists';
 import SharedListItemsScreen from '../screens/SharedListItems';
-import DeliveryRequestsScreen from '../screens/DeliveryRequests';
+import DeliveryScreen from '../screens/Delivery';
+// import DeliveryRequestsScreen from '../screens/DeliveryRequests';
 import DeliveryRequestContentsScreen from '../screens/DeliveryRequestContents';
 import ShareeOnMapScreen from '../screens/ShareeOnMap';
 import SharerOnMapScreen from '../screens/SharerOnMap';
@@ -21,6 +22,7 @@ import PriceComparatorScreen from '../screens/PriceComparator';
 import PriceComparatorSearchedScreen from '../screens/PriceComparatorSearched';
 import FeedbackScreen from '../screens/Feedback';
 import ViewFeedbackScreen from '../screens/ViewFeedback';
+import UserProfileScreen from '../screens/UserProfile';
 
 const AppRouter = () => (
     <NativeRouter>
@@ -37,7 +39,8 @@ const AppRouter = () => (
             <Route path='/ReceivedListItems' component={ReceivedListItemsScreen} />
             <Route path='/SharedLists' component={SharedListsScreen} />
             <Route path='/SharedListItems' component={SharedListItemsScreen} />
-            <Route path='/DeliveryRequests' component={DeliveryRequestsScreen} />
+            <Route path='/Delivery' component={DeliveryScreen} />
+            {/* <Route path='/DeliveryRequests' component={DeliveryRequestsScreen} /> */}
             <Route path='/DeliveryRequestContents' component={DeliveryRequestContentsScreen} />
             <Route path='/ShareeOnMap' component={ShareeOnMapScreen} />
             <Route path='/SharerOnMap' component={SharerOnMapScreen} />
@@ -45,6 +48,7 @@ const AppRouter = () => (
             <Route path='/PriceComparatorSearched' component={PriceComparatorSearchedScreen} />
             <Route path='/Feedback' component={FeedbackScreen} />
             <Route path='/ViewFeedback' component={ViewFeedbackScreen} />
+            <Route path='/UserProfile' component={UserProfileScreen} />
         </Switch>
     </NativeRouter>
 );

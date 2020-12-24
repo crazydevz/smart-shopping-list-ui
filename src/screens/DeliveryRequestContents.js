@@ -96,7 +96,7 @@ const DeliveryRequestContents = props => {
 
     useEffect(() => {
         !props.user.isAuthenticated && props.history.push('/Signin');
-    });
+    }, [props.isAuthenticated]);
 
     useEffect(() => {
         handleLoadedItems();
@@ -105,7 +105,7 @@ const DeliveryRequestContents = props => {
     return (
         <View style={{ width: '100%', flex: 1 }}>
             <Appbar.Header>
-                <Appbar.BackAction onPress={() => props.history.push('/DeliveryRequests')} />
+                <Appbar.BackAction onPress={() => props.history.push('/Delivery')} />
                 <Appbar.Content title={props.location.state.listName} subtitle={`Sent by ${props.location.state.creatorUsername}`} />
             </Appbar.Header>
             <Container>
