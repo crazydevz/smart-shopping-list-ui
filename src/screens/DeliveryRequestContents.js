@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Container from '../components/Container';
 // import ListItemInput from '../components/ListItemInput';
-import ReadOnlyListItem from '../components/ReadOnlyListItem';
+import DeliveryListItem from '../components/DeliveryListItem';
 // import ListItemUpdate from '../components/ListItemUpdate';
 // import { createRemoteListItem, deleteRemoteListItem, updateRemoteListItem } from '../actions/listItem';
 
@@ -94,9 +94,17 @@ const DeliveryRequestContents = props => {
         }
     };
 
+    const handleAcceptList = () => {
+        props.location.state.onAcceptList(props.location.state.listKey, {src_lat: 30, src_long: 45});
+    };
+
+    const handleRejectList = () => {
+        props.location.state.onRejectList(props.location.state.listKey);
+    };
+
     useEffect(() => {
         !props.user.isAuthenticated && props.history.push('/Signin');
-    }, [props.isAuthenticated]);
+    }, []);
 
     useEffect(() => {
         handleLoadedItems();
@@ -136,7 +144,7 @@ const DeliveryRequestContents = props => {
                                         contentContainerStyle={{ alignItems: 'center' }}
                                         data={items}
                                         renderItem={itemData => (
-                                            <ReadOnlyListItem
+                                            <DeliveryListItem
                                                 itemKey={itemData.item.key}
                                                 itemVal={itemData.item.value}
                                             // onDelete={handleDeleteItem}
@@ -146,10 +154,10 @@ const DeliveryRequestContents = props => {
                                     />
                                     <Button style={{ width: '100%' }} mode='outlined' onPress={() => { props.history.push('/SharerOnMap') }} >View Delivery Location</Button>
                                     <View style={styles.buttonContainer}>
-                                        <Button style={styles.button} mode="contained" onPress={() => props.location.state.onAcceptList(props.location.state.listKey, {src_lat: 30, src_long: 45})}>
+                                        <Button style={styles.button} mode="contained" onPress={handleAcceptList}>
                                             accept
                                         </Button>
-                                        <Button style={styles.button} mode="outlined" onPress={() => props.location.state.onRejectList(props.location.state.listKey)}>
+                                        <Button style={styles.button} mode="outlined" onPress={handleRejectList}>
                                             reject
                                         </Button>
                                     </View>

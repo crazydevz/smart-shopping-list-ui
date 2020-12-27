@@ -1,17 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { Appbar, FAB, Text } from 'react-native-paper';
+import { Appbar, FAB, Divider, Subheading, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import Container from '../components/Container';
 import ListItemInput from '../components/ListItemInput';
 import ListItem from '../components/ListItem';
+import RecommendedItem from '../components/RecommendedItem';
 import ListItemUpdate from '../components/ListItemUpdate';
 import OutgoingListItemsMore from '../components/OutgoingListItemsMore';
 import { createRemoteListItem, deleteRemoteListItem, updateRemoteListItem } from '../actions/listItem';
 
+// Data
+// import recommendedItems from '../../utilities/recommendationData';
+
 const ListItems = props => {
+    const recommendedItemsData = [
+        {
+            id: 1,
+            itemName: 'item 1'
+        },
+        {
+            id: 2,
+            itemName: 'item 2'
+        },
+        {
+            id: 3,
+            itemName: 'item 3'
+        },
+        {
+            id: 4,
+            itemName: 'item 4'
+        }
+    ];
+
     const [items, setItems] = useState([]);
+    const [recommendedItems, setRecommendedItems] = useState([]);
+
     const [isAddMode, setAddMode] = useState(false);
     const [isUpdateMode, setUpdateMode] = useState(false);
 
@@ -75,12 +100,31 @@ const ListItems = props => {
         setUpdateMode(false);
     };
 
+    // Handle item recommendations
+    const handleLoadedItemRecommendations = () => {
+        const loadedItems = recommendedItemsData;
+
+        if (!loadedItems) return console.log('Error while loading recommended items');
+
+        for (let i = 0; i < loadedItems.length; i++) {
+            setRecommendedItems(currentItems => [
+                ...currentItems,
+                {
+                    key: loadedItems[i].id,
+                    value: {
+                        itemName: loadedItems[i].itemName
+                    }
+                }
+            ]);
+        }
+    };
+
     const handleLoadedItems = () => {
         const loadedItems = props.location.state.listItems;
 
         if (!loadedItems) return console.log('Error while loading remote items!');
 
-        for(let i = 0; i < loadedItems.length; i++) {
+        for (let i = 0; i < loadedItems.length; i++) {
             setItems(currentItems => [
                 ...currentItems,
                 {
@@ -90,10 +134,11 @@ const ListItems = props => {
                         itemPrice: loadedItems[i].price_per_item,
                         itemQuantity: loadedItems[i].quantity_requested,
                         availableItemQuantity: loadedItems[i].quantity_available
-                    } 
+                    }
                 }
             ]);
         }
+        handleLoadedItemRecommendations();
     };
 
     const handleCancelShareList = () => {
@@ -109,7 +154,7 @@ const ListItems = props => {
     }, []);
 
     return (
-        <View style={{width: '100%', flex: 1}}>
+        <View style={{ width: '100%', flex: 1 }}>
             {(props.location.state.listType === 'myList') ?
                 <Appbar.Header>
                     <Appbar.BackAction onPress={() => props.history.push('/Lists')} />
@@ -133,30 +178,58 @@ const ListItems = props => {
                     onUpdateItem={handleUpdateItem}
                     onCancel={cancelUpdateItem}
                 />
-                <View style={{width: '100%', flex: 1}}>
+                <View style={{ width: '100%', flex: 1 }}>
                     {(props.listItem.isLoading) ?
                         <ActivityIndicator />
                         :
                         <View style={{ flex: 1, width: '100%' }}>
                             {(items.length == 0) ?
-                            <Container>
-                                <Text>
-                                    No items in this list
-                                </Text>
-                            </Container>
-                            :
-                            <FlatList
-                                contentContainerStyle={{ alignItems: 'center'}}
-                                data={items}
-                                renderItem={itemData => (
-                                    <ListItem
-                                        itemKey={itemData.item.key}
-                                        itemVal={itemData.item.value}
-                                        onDelete={handleDeleteItem}
-                                        setUpdateMode={setUpdateMode}
+                                <Container>
+                                    <Text>
+                                        No items in this list
+                                    </Text>
+                                </Container>
+                                :
+                                <View style={{ flex: 1, width: '100%' }}>
+                                    <FlatList
+                                        contentContainerStyle={{ alignItems: 'center', height: '50%' }}
+                                        data={items}
+                                        renderItem={itemData => (
+                                            <ListItem
+                                                itemKey={itemData.item.key}
+                                                itemVal={itemData.item.value}
+                                                onDelete={handleDeleteItem}
+                                                setUpdateMode={setUpdateMode}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />}
+                                    <Divider />
+                                    <Subheading style={{paddingLeft: 10}}>Recommended Grocery Items</Subheading>
+                                    <FlatList
+                                        contentContainerStyle={{ alignItems: 'center', height: '50%' }}
+                                        data={recommendedItems}
+                                        renderItem={itemData => (
+                                            <RecommendedItem
+                                                itemKey={itemData.item.key}
+                                                itemVal={itemData.item.value}
+                                            />
+                                        )}
+                                    />
+                                </View>
+                                // &&
+                                // <View style={{ flex: 1, width: '100%' }}>
+                                //     <FlatList
+                                //         contentContainerStyle={{ alignItems: 'center' }}
+                                //         data={recommendedItems}
+                                //         renderItem={itemData => (
+                                //             <RecommendedItem
+                                //                 itemKey={itemData.item.key}
+                                //                 itemVal={itemData.item.value}
+                                //             />
+                                //         )}
+                                //     />
+                                // </View>
+                            }
                         </View>
                     }
                 </View>

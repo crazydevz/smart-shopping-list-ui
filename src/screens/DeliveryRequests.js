@@ -38,15 +38,17 @@ const DeliveryRequests = props => {
     const handleAcceptList = (listKey, location) => {
         (async () => {
             await props.dispatch(acceptDeliveryRequest(props.user.authToken, listKey, location));
+            props.history.push('/Delivery');
         })();
-        props.history.push('/DeliveryRequests');
+        // setLists([]);
     };
 
     const handleRejectList = listKey => {
         (async () => {
             await props.dispatch(rejectDeliveryRequest(props.user.authToken, listKey));
+            props.history.push('/Delivery');
         })();
-        props.history.push('/DeliveryRequests');
+        // setLists([]);
     };
 
     // const filterLists = () => {

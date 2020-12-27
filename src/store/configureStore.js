@@ -13,6 +13,7 @@ import deliveryRequestReducer from '../reducers/deliveryRequest';
 import priceComparatorSearchedReducer from '../reducers/priceComparatorSearched';
 import feedbackReducer from '../reducers/feedback';
 import viewFeedbackReducer from '../reducers/viewFeedback';
+import priceComparisonReducer from '../reducers/priceComparison';
 
 export default () => {
     const store = createStore(
@@ -28,7 +29,8 @@ export default () => {
             deliveryRequest: deliveryRequestReducer,
             priceComparatorSearched: priceComparatorSearchedReducer,
             feedback: feedbackReducer,
-            viewFeedback: viewFeedbackReducer
+            viewFeedback: viewFeedbackReducer,
+            priceComparison: priceComparisonReducer
         }),
         applyMiddleware(thunk)
     );

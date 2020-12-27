@@ -13,8 +13,14 @@ const List = props => {
         props.setShareMode(true);
     };
 
-    const handleShareListNearby = () => {
-        props.history.push('/ShareeOnMap');
+    const handleShareListNearby = listKey => {
+        // props.history.push('/ShareeOnMap');
+        props.history.push({
+            pathname: '/ShareeOnMap',
+            state: {
+                listId: listKey
+            }
+        });
     };
 
     const handleDeleteList = () => {
@@ -43,7 +49,8 @@ const List = props => {
                 </View>
             </TouchableOpacity>
             <View style={styles.options}>
-                <ListMore 
+                <ListMore
+                    listKey={props.listKey}
                     onDeleteList={handleDeleteList}
                     onShareList={handleShareList}
                     onShareListNearby={handleShareListNearby}

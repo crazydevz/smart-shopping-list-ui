@@ -120,20 +120,20 @@ const Map = props => {
                         initialRegion={initialRegion}
                         onRegionChange={handleRegionChange}
                     >
-                        {/* {(region.latitude && region.longitude) &&
+                        {(region.latitude && region.longitude) &&
                             <Marker
                                 draggable
-                                coordinate={region}
+                                coordinate={initialRegion}
                                 title={'me'}
                                 description={'my location'}
                                 onDragEnd={(e) => handleRegionChange(e.nativeEvent.coordinate)}
                             />
-                        } */}
+                        }
                         {(destinationLocation.latitude && destinationLocation.longitude) &&
                             <Marker
                                 coordinate={destinationLocation}
-                                title={'sharee'}
-                                description={'sharee\'s location'}
+                                title={'ali'}
+                                description={'sharer'}
                                 image={require('../../assets/custom-marker.png')}
                             />
                         }
@@ -145,7 +145,7 @@ const Map = props => {
                             />
                         }
                     </MapView>
-                    <Surface style={styles.card}>
+                    {/* <Surface style={styles.card}>
                         <View style={styles.cardUpperPart}>
                             <View style={styles.cardUpperPartItem}>
                                 <Text style={{ textAlign: 'center' }}>3 km away</Text>
@@ -177,7 +177,7 @@ const Map = props => {
                                 <Rating rating={3} />
                             </View>
                         </View>
-                    </Surface>
+                    </Surface> */}
                 </View>
                 :
                 <Container>

@@ -4,8 +4,10 @@ import { Appbar, Avatar, Button, Divider, IconButton, Surface, Text } from 'reac
 import MapView, { Marker } from 'react-native-maps';
 import * as Permissions from 'expo-permissions';
 import Polyline from '@mapbox/polyline';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-native';
 
+import { requestListDelivery } from '../actions/deliveryRequest'
 import Container from '../components/Container';
 import Rating from '../components/Rating';
 
@@ -34,7 +36,7 @@ const Map = props => {
         setRegion(region);
     };
 
-    const destinationLocation = {
+    const sourceLocation = {
         latitude: location.latitude + 0.01,
         longitude: location.longitude + 0.01
     };
@@ -42,7 +44,7 @@ const Map = props => {
     const mergeCoords = () => {
         console.log('Merge coords');
         const { latitude, longitude } = location;
-        const { latitude: destLatitude, longitude: destLongitude } = destinationLocation;
+        const { latitude: destLatitude, longitude: destLongitude } = sourceLocation;
 
         console.log('lat: ' + latitude + ' lng: ' + longitude);
         console.log('destLat: ' + destLatitude + ' destLng: ' + destLongitude);
@@ -101,10 +103,22 @@ const Map = props => {
     // }, []);
 
     // useEffect(() => {
-    //     if(location.latitude && destinationLocation.latitude) {
+    //     if(location.latitude && sourceLocation.latitude) {
     //         mergeCoords();
     //     }
-    // }, [location.latitude, destinationLocation.latitude]);
+    // }, [location.latitude, sourceLocation.latitude]);
+
+    const handleRequestListDelivery = () => {
+        props.dispatch(requestListDelivery(
+            props.user.authToken,
+            props.location.state.listId,
+            '5fdda5b47b4c8f00179ce206',
+            {
+                destLat: region.latitude,
+                destLong: region.longitude
+            }
+        ));
+    };
 
     return (
         <View style={{ width: '100%', flex: 1 }}>
@@ -123,21 +137,21 @@ const Map = props => {
                         {(region.latitude && region.longitude) &&
                             <Marker
                                 draggable
-                                coordinate={region}
+                                coordinate={initialRegion}
                                 title={'me'}
                                 description={'my location'}
                                 onDragEnd={(e) => handleRegionChange(e.nativeEvent.coordinate)}
                             />
                         }
-                        {(destinationLocation.latitude && destinationLocation.longitude) &&
+                        {(sourceLocation.latitude && sourceLocation.longitude) &&
                             <Marker
-                                coordinate={destinationLocation}
-                                title={'sharee'}
-                                description={'sharee\'s location'}
+                                coordinate={sourceLocation}
+                                title={'talha'}
+                                description={'potential sharee'}
                                 image={require('../../assets/custom-marker.png')}
                             />
                         }
-                        {(destinationLocation.latitude && destinationLocation.longitude) &&
+                        {(sourceLocation.latitude && sourceLocation.longitude) &&
                             <MapView.Polyline
                                 strokeWidth={2}
                                 strokeColor='red'
@@ -145,7 +159,7 @@ const Map = props => {
                             />
                         }
                     </MapView>
-                    <Surface style={styles.card}>
+                    {/* <Surface style={styles.card}>
                         <View style={styles.cardUpperPart}>
                             <View style={styles.cardUpperPartItem}>
                                 <Text style={{ textAlign: 'center' }}>3 km away</Text>
@@ -179,9 +193,9 @@ const Map = props => {
                                 <Rating rating={3} />
                             </View>
                         </View>
-                    </Surface>
-                    <Button style={styles.shareListBtn} mode='contained' onPress={() => { console.log('Button pressed') }}>
-                        share list
+                    </Surface> */}
+                    <Button style={styles.shareListBtn} mode='contained' onPress={handleRequestListDelivery}>
+                        request delivery
                     </Button>
                 </View>
                 :
@@ -246,4 +260,13 @@ const styles = StyleSheet.create({
     },
 });
 
-export default withRouter(Map);
+const mapStateToProps = state => {
+    return {
+        user: {
+            authToken: state.user.authToken,
+            isAuthenticated: state.user.isAuthenticated
+        }
+    };
+};
+
+export default connect(mapStateToProps)(withRouter(Map));

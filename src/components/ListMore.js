@@ -22,7 +22,7 @@ const ListMore = (props) => {
 
     const handleShareListNearby = () => {
         closeMenu();
-        props.onShareListNearby();
+        props.onShareListNearby(props.listKey);
     };
 
     return (
