@@ -11,9 +11,11 @@ import {
 import { Appbar } from 'react-native-paper';
 import { connect } from 'react-redux';
 
+import Container from '../components/Container';
+
 // import { Container } from './styles';
 
-const PriceComparatorSearched = (props) => {
+const PriceComparatorSearched = props => {
     //   let {navigation} =props;
 
     const Views = (item) => (
@@ -21,24 +23,30 @@ const PriceComparatorSearched = (props) => {
         <TouchableOpacity>
             <View style={styles.card}>
                 <View style={styles.verText}>
-                    <Text style={styles.brandText}>{item.brandName}</Text>
+                    {/* <Text style={styles.brandText}>{item.brandName}</Text> */}
+                    <Text style={styles.brandText}>{item.store}</Text>
                 </View>
                 <View style={styles.container}>
                     <View style={styles.mobileName}>
-                        <Text style={styles.mobile}>{item.mobile}</Text>
+                        {/* <Text style={styles.mobile}>{item.mobile}</Text> */}
+                        <Text style={styles.mobile}>{item.name}</Text>
                     </View>
-                    <View style={styles.innerContainer}>
-                        <View style={styles.imageContainer}>
+                    {/* <View style={styles.innerContainer}> */}
+                        {/* <View style={styles.imageContainer}>
                             <Image
                                 style={styles.img}
                                 source={require("../../utilities/mobile.jpg")}
                             />
-                        </View>
-                        <View style={styles.priceContainer}>
-                            <Text style={styles.txt}>Price {item.price}</Text>
-                            <Text style={styles.txt}>Save {item.save}</Text>
-                        </View>
-                    </View>
+                        </View> */}
+                        <Container>
+                            <View style={styles.priceContainer}>
+                                {/* <Text style={styles.txt}>Price {item.price}</Text> */}
+                                <Text style={styles.txt}>Price {item.price}</Text>
+                                {/* <Text style={styles.txt}>Save {item.save}</Text> */}
+                                <Text style={styles.txt}>Save {item.discount}</Text>
+                            </View>
+                        </Container>
+                    {/* </View> */}
                 </View>
             </View>
         </TouchableOpacity>
@@ -51,8 +59,8 @@ const PriceComparatorSearched = (props) => {
                 <Appbar.Content title='Compared Prices' />
             </Appbar.Header>
             <FlatList
-                keyExtractor={(item) => item.id.toString()}
-                data={props.data}
+                keyExtractor={(item) => {item.index}}
+                data={props.loadedPriceComparisons}
                 renderItem={({ item }) => Views(item)}
             />
         </SafeAreaView>
@@ -142,9 +150,15 @@ let styles = StyleSheet.create({
 });
 
 //code for redux
-const mapStateToProps = (state) => ({
-      data: state.priceComparatorSearched
-});
+// const mapStateToProps = (state) => ({
+//       data: state.priceComparatorSearched
+// });
+
+const mapStateToProps = state => {
+  return {
+    loadedPriceComparisons: state.priceComparison.loadedComparisons
+  };
+};
 
 export default connect(mapStateToProps)(PriceComparatorSearched);
   

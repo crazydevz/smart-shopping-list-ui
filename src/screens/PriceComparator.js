@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import { Appbar, TextInput } from "react-native-paper";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 // import PriceComparatorAction from '../Services/Actions/PriceComparatorAction.js'
 
 // import { Container } from './styles';
 import CustomDrawer from '../components/CustomDrawer';
+import { loadPriceComparisons } from '../actions/priceComparison';
 
 const PriceComparatorScreen = (props) => {
   let [word, setWord] = useState("");
+
+  const handleLoadPriceComparisons = () => {
+    (async () => {
+      await props.dispatch(loadPriceComparisons(word));
+      props.history.push('/PriceComparatorSearched');
+    })();
+  };
+
   return (
     // <View>
     <CustomDrawer>
       <Appbar.Header>
-        <Appbar.Action icon='menu' onPress={() => {props.history.push('/')}} />
+        <Appbar.Action icon='menu' onPress={() => {props.history.push('/Lists')}} />
         <Appbar.Content title='Price Comaparator' />
       </Appbar.Header>
       <View style={styles.container}>
@@ -25,13 +34,7 @@ const PriceComparatorScreen = (props) => {
           value={word}
         />
         <View style={styles.wrapper}>
-          <TouchableOpacity style={styles.touchOp} onPress={
-            () => {
-              props.history.push('/PriceComparatorSearched');
-              // navigation.navigate("PriceComparatorSearched")
-              //priceComparatorHandler(word);
-            }
-          }>
+          <TouchableOpacity style={styles.touchOp} onPress={handleLoadPriceComparisons}>
             <View style={styles.txtContainer}>
               <Text style={styles.searchText}>Search</Text>
             </View>
@@ -97,14 +100,4 @@ let styles = StyleSheet.create({
   },
 });
 
-// const mapStateToProp = (state) => ({
-//   data: state.PriceComparatorReducer,
-// });
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     priceComparatorHandler: (item) => {
-//       dispatch(PriceComparatorAction(item));
-//     },
-//   };
-// };
-export default PriceComparatorScreen; //connect(mapStateToProp,mapDispatchToProps)(PriceComparatorScreen);
+export default connect()(PriceComparatorScreen); //connect(mapStateToProp,mapDispatchToProps)(PriceComparatorScreen);

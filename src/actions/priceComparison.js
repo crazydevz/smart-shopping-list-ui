@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PATH_LOCAL_API = 'http://localhost:9001';
+const PATH_LOCAL_API = 'https://ancient-taiga-19247.herokuapp.com';
 
 
 const getComparisonsSuccess = loadedComparisons => {
@@ -10,11 +10,11 @@ const getComparisonsSuccess = loadedComparisons => {
     };
 };
 
-async function _getComparisons(callback) {
+async function _loadPriceComparisons(callback, productName) {
     try {
         const response = await axios({
             method: 'get',
-            url: `${PATH_LOCAL_API}/shoppingLists`
+            url: `${PATH_LOCAL_API}/stores/${productName}`
         });
         if (!response) return console.log('Request failed');
 
@@ -27,9 +27,9 @@ async function _getComparisons(callback) {
     }
 }
 
-export const getComparisons = () => {
+export const loadPriceComparisons = (productName) => {
     return async (dispatch, getState) => {
-        await _getComparisons(dispatch);
+        await _loadPriceComparisons(dispatch, productName);
         stateAfter = getState();
         return stateAfter.priceComparison.loadedComparisons;
     };
