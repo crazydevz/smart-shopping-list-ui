@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Appbar, Button, Caption, Subheading, Title } from 'react-native-paper';
 
@@ -13,7 +13,7 @@ const UserProfile = props => {
     return (
         <View style={{ width: '100%', flex: 1 }} >
             <Appbar.Header>
-                <Appbar.BackAction onPress={() => props.history.push(props.location.state.previousScreen)} />
+                <Appbar.BackAction onPress={() => props.history.push('/Lists')} />
                 <Appbar.Content title='User Profile' />
             </Appbar.Header>
             <Container>

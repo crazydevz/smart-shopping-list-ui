@@ -1,80 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { Appbar, Button, FAB, Text } from 'react-native-paper';
+import { Appbar, Button, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-native'
 
 import Container from '../components/Container';
-// import ListItemInput from '../components/ListItemInput';
 import DeliveryListItem from '../components/DeliveryListItem';
-// import ListItemUpdate from '../components/ListItemUpdate';
-// import { createRemoteListItem, deleteRemoteListItem, updateRemoteListItem } from '../actions/listItem';
 import { loadDeliveryInProgress, cancelDeliveryInProgress, completeDeliveryInProgress } from '../actions/deliveryRequest';
 
 const DeliveryInProgress = props => {
     let [list, setList] = useState(null);
     const [items, setItems] = useState([]);
-    // const [isAddMode, setAddMode] = useState(false);
-    // const [isUpdateMode, setUpdateMode] = useState(false);
-
-    // const handleCreateItem = item => {
-    //     (async () => {
-    //         const createdItem = await props.dispatch(createRemoteListItem(props.user.authToken, props.location.state.listKey, item));
-    //         setItems(currentItems => [
-    //             ...currentItems,
-    //             {
-    //                 key: createdItem.itemId,
-    //                 value: createdItem
-    //             }
-    //         ]);
-    //     })();
-    //     setAddMode(false);
-    // };
-
-    // const handleUpdateLocalItem = ({ itemId, itemName, itemPrice, itemQuantity }) => {
-    //     const updatedItem = { itemId, itemName, itemPrice, itemQuantity };
-    //     // Delete old list item from list items list
-    //     setItems(currentItems => {
-    //         return currentItems.filter(item => item.key !== itemId);
-    //     });
-    //     // Add updated list item to list items list
-    //     setItems(currentItems => [
-    //         ...currentItems,
-    //         {
-    //             key: updatedItem.itemId,
-    //             value: updatedItem
-    //         }
-    //     ]);
-    // };
-
-    // handleUpdateItem
-    // const handleUpdateItem = ({ itemId, itemName, itemPrice, itemQuantity }) => {
-    //     const item = {
-    //         item_name: itemName,
-    //         price_per_item: itemPrice,
-    //         quantity_requested: itemQuantity
-    //     };
-    //     (async () => {
-    //         await props.dispatch(updateRemoteListItem(props.user.authToken, props.location.state.listKey, itemId, item));
-    //     })();
-    //     handleUpdateLocalItem({ itemId, itemName, itemPrice, itemQuantity });
-    //     setUpdateMode(false);
-    // };
-
-    // const handleDeleteItem = itemKey => {
-    //     props.dispatch(deleteRemoteListItem(props.user.authToken, props.location.state.listKey, itemKey));
-    //     setItems(currentItems => {
-    //         return currentItems.filter(item => item.key !== itemKey);
-    //     });
-    // };
-
-    // const cancelCreateItem = () => {
-    //     setAddMode(false);
-    // };
-
-    // const cancelUpdateItem = () => {
-    //     setUpdateMode(false);
-    // };
 
     const handleLoadList = () => {
         (async () => {
@@ -112,7 +48,6 @@ const DeliveryInProgress = props => {
             await props.dispatch(completeDeliveryInProgress(props.user.authToken, listKey));
             setList(null);
         })();
-        // props.history.push('/Delivery');
     };
 
     const handleCancelDeliveryInProgress = listKey => {
@@ -120,7 +55,6 @@ const DeliveryInProgress = props => {
             await props.dispatch(cancelDeliveryInProgress(props.user.authToken, listKey));
             setList(null);
         })();
-        // props.history.push('/Delivery');
     };
 
     useEffect(() => {
@@ -138,16 +72,6 @@ const DeliveryInProgress = props => {
                 {(list !== null) && <Appbar.Content title={list.list_name} subtitle={`Sent by ${list.creator_username}`} />}
             </Appbar.Header>
             <Container>
-                {/* <ListItemInput
-                            visible={isAddMode}
-                            onCreateItem={handleCreateItem}
-                            onCancel={cancelCreateItem}
-                        /> */}
-                {/* <ListItemUpdate
-                            visible={isUpdateMode}
-                            onUpdateItem={handleUpdateItem}
-                            onCancel={cancelUpdateItem}
-                        /> */}
                 <View style={{ width: '100%', flex: 1 }}>
                     {(props.listItem.isLoading) ?
                         <ActivityIndicator />
@@ -168,8 +92,6 @@ const DeliveryInProgress = props => {
                                             <DeliveryListItem
                                                 itemKey={itemData.item.key}
                                                 itemVal={itemData.item.value}
-                                            // onDelete={handleDeleteItem}
-                                            // setUpdateMode={setUpdateMode}
                                             />
                                         )}
                                     />
@@ -187,12 +109,6 @@ const DeliveryInProgress = props => {
                         </View>
                     }
                 </View>
-                {/* <FAB
-                    style={styles.createItemFab}
-                    large
-                    icon="plus"
-                    onPress={() => setAddMode(true)}
-                /> */}
             </Container>
         </View>
     );

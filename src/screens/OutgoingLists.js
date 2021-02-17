@@ -40,19 +40,6 @@ const OutgoingLists = props => {
         props.history.push('/OutgoingLists');
     };
 
-    // const handleRejectList = listKey => {
-    //     (async () => {
-    //         await props.dispatch(rejectList(props.user.authToken, listKey));
-    //     })();
-    //     props.history.push('/IncomingLists');
-    // };
-
-    // const filterLists = () => {
-    //     setLists(currentLists => {
-    //         return currentLists.filter(list => list.key !== listKey);
-    //     });
-    // };
-
     useEffect(() => {
         handleLoadUnacceptedLists();
     }, []);
@@ -81,11 +68,9 @@ const OutgoingLists = props => {
                                     data={lists}
                                     renderItem={itemData => (
                                         <OutgoingList
-                                            // hist={props.history}
                                             listKey={itemData.item.key}
                                             listVal={itemData.item.value}
                                             onUnshareList={handleUnshareList}
-                                        // onRejectList={handleRejectList}
                                         />
                                     )}
                                 />}

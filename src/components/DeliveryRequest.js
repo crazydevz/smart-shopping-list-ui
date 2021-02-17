@@ -7,10 +7,6 @@ const DeliveryRequest = props => {
 
     return (
         <Surface style={styles.listContainer}>
-            {/* <TouchableOpacity
-                style={styles.listInfo}
-                onPress={() => props.history.push({ pathname: '/UnacceptedListItems', state: { listKey: props.listId, listName: props.listVal.listName, listItems: props.listVal.listItems } })}
-            > */}
             <View style={styles.listInfo}>
                 <View style={styles.listName}>
                     <Text>{props.listVal.listName}</Text>
@@ -19,7 +15,6 @@ const DeliveryRequest = props => {
                     <Text>By {props.listVal.creatorUsername}</Text>
                 </View>
             </View>
-            {/* </TouchableOpacity> */}
             <View style={styles.options}>
                 <IconButton
                     icon="eye"

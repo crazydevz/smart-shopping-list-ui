@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { Appbar, Button, FAB, Text } from 'react-native-paper';
+import { Appbar, FAB, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import Container from '../components/Container';
@@ -148,11 +148,6 @@ const OutgoingListItems = props => {
                                             />
                                         )}
                                     />
-                                    {/* <View style={styles.buttonContainer}>
-                                        <Button style={styles.button} mode="contained" onPress={() => props.location.state.onUnshareList(props.location.state.listKey)}>
-                                            cancel request
-                                        </Button>
-                                    </View> */}
                                 </View>
                             }
                         </View>

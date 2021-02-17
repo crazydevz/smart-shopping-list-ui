@@ -11,8 +11,6 @@ import { Rating } from "react-native-ratings";
 import { Appbar } from 'react-native-paper';
 import { connect } from "react-redux";
 
-// import { Container } from './styles';
-
 const ViewFeedback = (props) => {
   let Views = (item) => (
     <TouchableOpacity>
@@ -43,7 +41,7 @@ const ViewFeedback = (props) => {
   return (
     <View>
       <Appbar.Header>
-        <Appbar.BackAction onPress={() => { props.history.push('/UserProfile') }} />
+        <Appbar.BackAction onPress={() => { props.history.push('/ShareeOnMap') }} />
         <Appbar.Content title='User Feedback' />
       </Appbar.Header>
       <FlatList
@@ -95,17 +93,14 @@ let styles = StyleSheet.create({
     fontSize: 18,
     marginRight: "30%",
     marginBottom: "20%",
-    // fontFamily:"Roboto-Light"
   },
   rateDetail: {
     height: 150,
-    // justifyContent: "center",
     alignItems: "center",
   },
   txt: {
     fontSize: 18,
     fontWeight: "bold",
-    // fontFamily:"Roboto-Light"
   },
 });
 

@@ -40,19 +40,6 @@ const SharedLists = props => {
         props.history.push('/SharedLists');
     };
 
-    // const handleRejectList = listKey => {
-    //     (async () => {
-    //         await props.dispatch(rejectList(props.user.authToken, listKey));
-    //     })();
-    //     props.history.push('/IncomingLists');
-    // };
-
-    // const filterLists = () => {
-    //     setLists(currentLists => {
-    //         return currentLists.filter(list => list.key !== listKey);
-    //     });
-    // };
-
     useEffect(() => {
         handleLoadSharedLists();
     }, []);
@@ -81,11 +68,9 @@ const SharedLists = props => {
                                     data={lists}
                                     renderItem={itemData => (
                                         <SharedList
-                                            // hist={props.history}
                                             listKey={itemData.item.key}
                                             listVal={itemData.item.value}
                                             onUnshareList={handleUnshareList}
-                                            // onRejectList={handleRejectList}
                                         />
                                     )}
                                 />}

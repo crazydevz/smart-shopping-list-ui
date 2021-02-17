@@ -61,12 +61,12 @@ const Signin = props => {
                         <Button style={styles.button} mode="contained" onPress={handleSignin}>
                             signin
                         </Button>
-                        <Button style={styles.button} mode="outlined" onPress={() => props.history.push('/')}>
+                        <Button style={styles.button} mode="outlined" onPress={() => props.history.push('/Signup')}>
                             signup instead
                         </Button>
                     </View>
                 </View>
-            </Container >
+            </Container>
     );
 };
 

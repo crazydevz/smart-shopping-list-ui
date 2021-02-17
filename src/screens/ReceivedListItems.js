@@ -1,34 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
-import { Appbar, Button, FAB, Text } from 'react-native-paper';
+import { Appbar, Text } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import Container from '../components/Container';
-// import ListItemInput from '../components/ListItemInput';
 import ReceivedListItem from '../components/ReceivedListItem';
 import ListItemUpdate from '../components/ListItemUpdate';
 import ReceivedListItemsMore from '../components/ReceivedListItemsMore';
 import { updateReceivedListItem } from '../actions/receivedListItem';
-// import { createRemoteListItem, deleteRemoteListItem, updateRemoteListItem } from '../actions/listItem';
 
 const ReceivedListItems = props => {
     const [items, setItems] = useState([]);
-    // const [isAddMode, setAddMode] = useState(false);
     const [isUpdateMode, setUpdateMode] = useState(false);
-
-    // const handleCreateItem = item => {
-    //     (async () => {
-    //         const createdItem = await props.dispatch(createRemoteListItem(props.user.authToken, props.location.state.listKey, item));
-    //         setItems(currentItems => [
-    //             ...currentItems,
-    //             {
-    //                 key: createdItem.itemId,
-    //                 value: createdItem
-    //             }
-    //         ]);
-    //     })();
-    //     setAddMode(false);
-    // };
 
     const handleUpdateLocalItem = ({ itemId, itemName, itemPrice, itemQuantity, availableItemQuantity }) => {
         const updatedItem = { itemId, itemName, itemPrice, itemQuantity, availableItemQuantity };
@@ -57,17 +40,6 @@ const ReceivedListItems = props => {
         handleUpdateLocalItem({ itemId, itemName, itemPrice, itemQuantity, availableItemQuantity });
         setUpdateMode(false);
     };
-
-    // const handleDeleteItem = itemKey => {
-    //     props.dispatch(deleteRemoteListItem(props.user.authToken, props.location.state.listKey, itemKey));
-    //     setItems(currentItems => {
-    //         return currentItems.filter(item => item.key !== itemKey);
-    //     });
-    // };
-
-    // const cancelCreateItem = () => {
-    //     setAddMode(false);
-    // };
 
     const cancelUpdateItem = () => {
         setUpdateMode(false);
@@ -114,11 +86,6 @@ const ReceivedListItems = props => {
                 <ReceivedListItemsMore onUnshareList={handleUnshareList} />
             </Appbar.Header>
             <Container>
-                {/* <ListItemInput
-                    visible={isAddMode}
-                    onCreateItem={handleCreateItem}
-                    onCancel={cancelCreateItem}
-                /> */}
                 <ListItemUpdate
                     itemType='receivedItem'
                     visible={isUpdateMode}
@@ -145,44 +112,21 @@ const ReceivedListItems = props => {
                                             <ReceivedListItem
                                                 itemKey={itemData.item.key}
                                                 itemVal={itemData.item.value}
-                                                // onDelete={handleDeleteItem}
                                                 setUpdateMode={setUpdateMode}
                                             />
                                         )}
                                     />
-                                    {/* <View style={styles.buttonContainer}>
-                                        <Button style={styles.button} mode='contained' onPress={() => props.location.state.onUnshareList(props.location.state.listKey)}>
-                                            unshare
-                                        </Button>
-                                    </View> */}
                                 </View>
                             }
                         </View>
                     }
                 </View>
-                {/* <FAB
-                    style={styles.createItemFab}
-                    large
-                    icon="plus"
-                    onPress={() => setAddMode(true)}
-                /> */}
             </Container>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    // buttonContainer: {
-    //     width: '100%',
-    //     marginVertical: 20,
-    //     flexDirection: 'row',
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    // },
-    // button: {
-    //     width: '45%',
-    //     marginVertical: 10,
-    // },
     createItemFab: {
         position: 'absolute',
         margin: 16,

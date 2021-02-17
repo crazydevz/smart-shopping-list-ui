@@ -1,6 +1,7 @@
 import React from 'react';
 import { NativeRouter, Switch, Route } from 'react-router-native';
 
+import LandingPage from '../screens/LandingPage'
 import SignupScreen from '../screens/Signup';
 import SigninScreen from '../screens/Signin';
 import ListsScreen from '../screens/Lists';
@@ -27,7 +28,8 @@ import UserProfileScreen from '../screens/UserProfile';
 const AppRouter = () => (
     <NativeRouter>
         <Switch>
-            <Route path='/' component={SignupScreen} exact />
+            <Route path='/' component={LandingPage} exact />
+            <Route path='/Signup' component={SignupScreen} />
             <Route path='/Signin' component={SigninScreen} />
             <Route path='/Lists' component={ListsScreen} />
             <Route path='/ListItems' component={ListItemsScreen} />

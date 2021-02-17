@@ -47,12 +47,6 @@ const IncomingLists = props => {
         props.history.push('/IncomingLists');
     };
 
-    // const filterLists = () => {
-    //     setLists(currentLists => {
-    //         return currentLists.filter(list => list.key !== listKey);
-    //     });
-    // };
-
     useEffect(() => {
         handleLoadUnacceptedLists();
     }, []);
@@ -81,7 +75,6 @@ const IncomingLists = props => {
                                     data={lists}
                                     renderItem={itemData => (
                                         <IncomingList
-                                            // hist={props.history}
                                             listKey={itemData.item.key}
                                             listVal={itemData.item.value}
                                             onAcceptList={handleAcceptList}

@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import { Appbar, TextInput } from "react-native-paper";
 import { connect } from "react-redux";
-// import PriceComparatorAction from '../Services/Actions/PriceComparatorAction.js'
 
-// import { Container } from './styles';
 import CustomDrawer from '../components/CustomDrawer';
 import { loadPriceComparisons } from '../actions/priceComparison';
 
@@ -19,7 +17,6 @@ const PriceComparatorScreen = (props) => {
   };
 
   return (
-    // <View>
     <CustomDrawer>
       <Appbar.Header>
         <Appbar.Action icon='menu' onPress={() => {props.history.push('/Lists')}} />
@@ -42,7 +39,6 @@ const PriceComparatorScreen = (props) => {
         </View>
       </View>
     </CustomDrawer>
-    // </View>
   );
 };
 
@@ -96,8 +92,7 @@ let styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 20,
-    // fontFamily:"Roboto-Light"
   },
 });
 
-export default connect()(PriceComparatorScreen); //connect(mapStateToProp,mapDispatchToProps)(PriceComparatorScreen);
+export default connect()(PriceComparatorScreen);

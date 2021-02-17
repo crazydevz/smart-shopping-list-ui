@@ -8,12 +8,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-native';
 
 import { requestListDelivery } from '../actions/deliveryRequest'
+import DeliveryRequestSent from '../components/DeliveryRequestSent';
 import Container from '../components/Container';
 import Rating from '../components/Rating';
 
 const API_KEY = 'AIzaSyB-b8_C-1Qm0W2UwuWq_DnmlfZuK8-CbVY';
 
 const Map = props => {
+    const [isDeliveryMode, setDeliveryMode] = useState(false);
     const [coords, setCoords] = useState([]);
 
     const [location, setLocation] = useState({
@@ -118,10 +120,20 @@ const Map = props => {
                 destLong: region.longitude
             }
         ));
+        setDeliveryMode(true);
+    };
+
+    const handleDeliveryOk = () => {
+        setDeliveryMode(false);
+        props.history.push('/Lists');
     };
 
     return (
         <View style={{ width: '100%', flex: 1 }}>
+            <DeliveryRequestSent
+                visible={isDeliveryMode}
+                onOk={handleDeliveryOk}
+            />
             <Appbar.Header>
                 <Appbar.BackAction onPress={() => props.history.push('/Lists')} />
                 <Appbar.Content title='Sharee Locations' />
@@ -129,7 +141,7 @@ const Map = props => {
             {(location.latitude && location.longitude) ?
                 <View style={{width: '100%', flex: 1}}>
                     <MapView
-                        showsUserLocation
+                        // showsUserLocation
                         style={styles.map}
                         initialRegion={initialRegion}
                         onRegionChange={handleRegionChange}
@@ -159,41 +171,33 @@ const Map = props => {
                             />
                         }
                     </MapView>
-                    {/* <Surface style={styles.card}>
+                    <Surface style={styles.card}>
                         <View style={styles.cardUpperPart}>
                             <View style={styles.cardUpperPartItem}>
                                 <Text style={{ textAlign: 'center' }}>3 km away</Text>
                             </View>
                             <View style={styles.cardUpperPartItem}>
-                                <Text style={{ textAlign: 'center' }}>Estimated fair: Rs 300</Text>
+                                <Text style={{ textAlign: 'center' }}>Expected fair: Rs 150</Text>
                             </View>
                         </View>
                         <Divider />
                         <View style={styles.profileCard}>
                             <TouchableOpacity
                                 style={styles.profileCardLeftPart}
-                                onPress={() => props.history.push(
-                                    {
-                                        pathname: '/UserProfile',
-                                        state: {
-                                            previousScreen: '/ShareeOnMap'
-                                        }
-                                    }
-                                )}
+                                onPress={() => props.history.push('/ViewFeedback')}
                             >
                                 <View style={styles.avatarIcon}>
                                     <Avatar.Icon size={35} icon='folder' />
                                 </View>
                                 <View style={styles.profileInfo}>
-                                    <Text>Sajid Ali</Text>
-                                    <Text>sajid21</Text>
+                                    <Text>talha</Text>
                                 </View>
                             </TouchableOpacity>
                             <View style={styles.profileRating}>
-                                <Rating rating={3} />
+                                <Rating rating={4} />
                             </View>
                         </View>
-                    </Surface> */}
+                    </Surface>
                     <Button style={styles.shareListBtn} mode='contained' onPress={handleRequestListDelivery}>
                         request delivery
                     </Button>

@@ -20,10 +20,10 @@ const ListMore = (props) => {
         props.onDeleteList();
     };
 
-    const handleShareListNearby = () => {
-        closeMenu();
-        props.onShareListNearby(props.listKey);
-    };
+    // const handleShareListNearby = () => {
+    //     closeMenu();
+    //     props.onShareListNearby(props.listKey);
+    // };
 
     return (
         <View>
@@ -32,11 +32,10 @@ const ListMore = (props) => {
                 onDismiss={closeMenu}
                 anchor={<IconButton icon={MORE_ICON} size={20} onPress={openMenu} />}
             >
-                {/* <Menu.Item onPress={() => { }} title="Item 2" /> */}
                 <Menu.Item onPress={handleDeleteList} title="Delete" />
                 <Divider />
                 <Menu.Item onPress={handleShareList} title="Share" />
-                <Menu.Item onPress={handleShareListNearby} title="Share Nearby" />
+                {/* <Menu.Item onPress={handleShareListNearby} title="Request Delivery" /> */}
             </Menu>
         </View>
     );

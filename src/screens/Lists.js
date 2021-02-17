@@ -100,7 +100,6 @@ const Lists = props => {
     }, []);
 
     return (
-        // <View style={{ width: '100%', flex: 1 }}>
         <CustomDrawer>
             <ListNameInput
                 visible={isAddMode}
@@ -164,7 +163,6 @@ const Lists = props => {
                 />
             </Container>
         </CustomDrawer>
-        // </View>
     );
 };
 

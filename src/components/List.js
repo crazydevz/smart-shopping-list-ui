@@ -14,7 +14,6 @@ const List = props => {
     };
 
     const handleShareListNearby = listKey => {
-        // props.history.push('/ShareeOnMap');
         props.history.push({
             pathname: '/ShareeOnMap',
             state: {
@@ -55,12 +54,6 @@ const List = props => {
                     onShareList={handleShareList}
                     onShareListNearby={handleShareListNearby}
                 />
-                {/* <IconButton
-                    icon="delete"
-                    size={20}
-                    // onPress={() => props.onDelete(props.listKey)}
-                    onPress={handleShareList}
-                /> */}
             </View>
         </Surface>
     );

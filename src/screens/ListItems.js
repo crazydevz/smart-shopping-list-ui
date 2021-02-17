@@ -18,19 +18,15 @@ const ListItems = props => {
     const recommendedItemsData = [
         {
             id: 1,
-            itemName: 'item 1'
+            itemName: 'Bread'
         },
         {
             id: 2,
-            itemName: 'item 2'
+            itemName: 'Butter'
         },
         {
             id: 3,
-            itemName: 'item 3'
-        },
-        {
-            id: 4,
-            itemName: 'item 4'
+            itemName: 'Vinegar'
         }
     ];
 
@@ -203,7 +199,7 @@ const ListItems = props => {
                                             />
                                         )}
                                     />
-                                    <Divider />
+                                    {/* <Divider />
                                     <Subheading style={{paddingLeft: 10}}>Recommended Grocery Items</Subheading>
                                     <FlatList
                                         contentContainerStyle={{ alignItems: 'center', height: '50%' }}
@@ -214,7 +210,7 @@ const ListItems = props => {
                                                 itemVal={itemData.item.value}
                                             />
                                         )}
-                                    />
+                                    /> */}
                                 </View>
                                 // &&
                                 // <View style={{ flex: 1, width: '100%' }}>

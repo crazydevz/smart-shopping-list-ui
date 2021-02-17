@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-native';
 
 import Container from '../components/Container';
-// import CustomDrawer from '../components/CustomDrawer';
 import DeliveryRequest from '../components/DeliveryRequest';
-// import { acceptList, rejectList, loadIncomingLists } from '../actions/incomingList';
 import { acceptDeliveryRequest, rejectDeliveryRequest, loadDeliveryRequests } from '../actions/deliveryRequest';
 
 const DeliveryRequests = props => {
@@ -40,7 +38,6 @@ const DeliveryRequests = props => {
             await props.dispatch(acceptDeliveryRequest(props.user.authToken, listKey, location));
             props.history.push('/Delivery');
         })();
-        // setLists([]);
     };
 
     const handleRejectList = listKey => {
@@ -48,14 +45,7 @@ const DeliveryRequests = props => {
             await props.dispatch(rejectDeliveryRequest(props.user.authToken, listKey));
             props.history.push('/Delivery');
         })();
-        // setLists([]);
     };
-
-    // const filterLists = () => {
-    //     setLists(currentLists => {
-    //         return currentLists.filter(list => list.key !== listKey);
-    //     });
-    // };
 
     useEffect(() => {
         handleLoadDeliveryRequests();
@@ -85,7 +75,6 @@ const DeliveryRequests = props => {
                                     data={lists}
                                     renderItem={itemData => (
                                         <DeliveryRequest
-                                            // hist={props.history}
                                             listKey={itemData.item.key}
                                             listVal={itemData.item.value}
                                             onAcceptList={handleAcceptList}

@@ -6,10 +6,6 @@ import CustomDrawer from '../components/CustomDrawer';
 import DeliveryRequestsScreen from './DeliveryRequests';
 import DeliveryInProgressScreen from './DeliveryInProgress';
 
-// const MusicRoute = () => <Container><Text>Delivery Requests</Text></Container>;
-
-// const AlbumsRoute = () => <Container><Text>Delivery In Progress</Text></Container>;
-
 const HistoryRoute = () => <Container><Text>Delivery History</Text></Container>;
 
 const Delivery = props => {
@@ -17,13 +13,11 @@ const Delivery = props => {
     const [routes] = useState([
         { key: 'deliveryRequests', title: 'Requests', icon: 'basket-fill' },
         { key: 'deliveryInProgress', title: 'In Progress', icon: 'archive' },
-        // { key: 'deliveryHistory', title: 'History', icon: 'history' },
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
         deliveryRequests: DeliveryRequestsScreen,
         deliveryInProgress: DeliveryInProgressScreen,
-        // deliveryHistory: HistoryRoute,
     });
 
     return (

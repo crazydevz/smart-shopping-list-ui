@@ -115,23 +115,23 @@ const Map = props => {
             {(location.latitude && location.longitude) ?
                 <View style={{ width: '100%', flex: 1 }}>
                     <MapView
-                        showsUserLocation
+                        // showsUserLocation
                         style={styles.map}
                         initialRegion={initialRegion}
                         onRegionChange={handleRegionChange}
                     >
                         {(region.latitude && region.longitude) &&
                             <Marker
-                                draggable
-                                coordinate={initialRegion}
+                                // draggable
+                                coordinate={destinationLocation}
                                 title={'me'}
                                 description={'my location'}
-                                onDragEnd={(e) => handleRegionChange(e.nativeEvent.coordinate)}
+                                // onDragEnd={(e) => handleRegionChange(e.nativeEvent.coordinate)}
                             />
                         }
                         {(destinationLocation.latitude && destinationLocation.longitude) &&
                             <Marker
-                                coordinate={destinationLocation}
+                                coordinate={initialRegion}
                                 title={'ali'}
                                 description={'sharer'}
                                 image={require('../../assets/custom-marker.png')}
@@ -145,39 +145,33 @@ const Map = props => {
                             />
                         }
                     </MapView>
-                    {/* <Surface style={styles.card}>
+                    <Surface style={styles.card}>
                         <View style={styles.cardUpperPart}>
                             <View style={styles.cardUpperPartItem}>
                                 <Text style={{ textAlign: 'center' }}>3 km away</Text>
                             </View>
                             <View style={styles.cardUpperPartItem}>
-                                <Text style={{ textAlign: 'center' }}>Estimated fair: Rs 300</Text>
+                                <Text style={{ textAlign: 'center' }}>Estimated fair: Rs 150</Text>
                             </View>
                         </View>
                         <Divider />
                         <View style={styles.profileCard}>
                             <TouchableOpacity
                                 style={styles.profileCardLeftPart}
-                                onPress={() => props.history.push({
-                                    pathname: '/UserProfile',
-                                    state: {
-                                        previousScreen: '/SharerOnMap'
-                                    }
-                                })}
+                                onPress={() => props.history.push('/Feedback')}
                             >
                                 <View style={styles.avatarIcon}>
                                     <Avatar.Icon size={35} icon='folder' />
                                 </View>
                                 <View style={styles.profileInfo}>
-                                    <Text>Fahad Tahir</Text>
-                                    <Text>Fahad</Text>
+                                    <Text>ali</Text>
                                 </View>
                             </TouchableOpacity>
                             <View style={styles.profileRating}>
-                                <Rating rating={3} />
+                                <Rating rating={5} />
                             </View>
                         </View>
-                    </Surface> */}
+                    </Surface>
                 </View>
                 :
                 <Container>

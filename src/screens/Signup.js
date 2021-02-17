@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, TextInputComponent, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Title, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 

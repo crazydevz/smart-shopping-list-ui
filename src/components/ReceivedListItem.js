@@ -33,13 +33,6 @@ const ListItem = props => {
                     <Text>{props.itemVal.availableItemQuantity}/{props.itemVal.itemQuantity}</Text>
                 </View>
             </TouchableOpacity>
-            {/* <View style={styles.options} >
-                <IconButton
-                    icon="delete"
-                    size={20}
-                    onPress={() => props.onDelete(props.itemKey)}
-                />
-            </View> */}
         </Surface>
     );
 };
@@ -70,11 +63,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 2,
     },
-    // options: {
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     flex: 1,
-    // },
 });
 
 export default connect()(ListItem);

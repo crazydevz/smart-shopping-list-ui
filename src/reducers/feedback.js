@@ -4,7 +4,7 @@ import {Feedback} from "../constants/constant";
 
 let initialState = {
     imageUrl:"../../utilities/person.jpg",
-    name:"Fahad Tahir",
+    name:"ali",
     rates:"",
     comment:""
 }

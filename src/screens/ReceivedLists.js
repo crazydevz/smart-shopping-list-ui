@@ -40,19 +40,6 @@ const ReceivedLists = props => {
         props.history.push('/ReceivedLists');
     };
 
-    // const handleRejectList = listKey => {
-    //     (async () => {
-    //         await props.dispatch(rejectList(props.user.authToken, listKey));
-    //     })();
-    //     props.history.push('/IncomingLists');
-    // };
-
-    // const filterLists = () => {
-    //     setLists(currentLists => {
-    //         return currentLists.filter(list => list.key !== listKey);
-    //     });
-    // };
-
     useEffect(() => {
         handleLoadReceivedLists();
     }, []);
@@ -81,11 +68,9 @@ const ReceivedLists = props => {
                                     data={lists}
                                     renderItem={itemData => (
                                         <ReceivedList
-                                            // hist={props.history}
                                             listKey={itemData.item.key}
                                             listVal={itemData.item.value}
                                             onUnshareList={handleUnshareList}
-                                            // onRejectList={handleRejectList}
                                         />
                                     )}
                                 />}
