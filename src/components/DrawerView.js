@@ -46,15 +46,15 @@ const DrawerView = props => {
     //     props.history.push('/DeliveryRequests');
     // };
 
-    const handleGoToDelivery = () => {
-        setIsActive('delivery');
-        props.history.push('/Delivery');
-    };
+    // const handleGoToDelivery = () => {
+    //     setIsActive('delivery');
+    //     props.history.push('/Delivery');
+    // };
 
-    const handleGoToPriceComparator = () => {
-        setIsActive('priceComparator');
-        props.history.push('/PriceComparator');
-    };
+    // const handleGoToPriceComparator = () => {
+    //     setIsActive('priceComparator');
+    //     props.history.push('/PriceComparator');
+    // };
 
     return (
         <View style={{ flex: 1, width: '100%', marginTop: 80 }}>
@@ -87,35 +87,35 @@ const DrawerView = props => {
                     onPress={handleGoToSharedLists}
                 />
             </Drawer.Section>
-            <Drawer.Section title='List Delivery'>
-                {/* <Drawer.Item
+            {/* <Drawer.Section title='List Delivery'>
+                <Drawer.Item
                     label="Sharees On Map"
                     active={isActive === 'shareeOnMap'}
                     onPress={handleGoToShareeOnMap}
-                /> */}
-                {/* <Drawer.Item
+                />
+                <Drawer.Item
                     label="Sharer On Map"
                     active={isActive === 'sharerOnMap'}
                     onPress={handleGoToSharerOnMap}
-                /> */}
-                {/* <Drawer.Item
+                />
+                <Drawer.Item
                     label="Delivery Requests"
                     active={isActive === 'deliveryRequests'}
                     onPress={handleGoToDeliveryRequests}
-                /> */}
+                />
                 <Drawer.Item
                     label="Delivery"
                     active={isActive === 'delivery'}
                     onPress={handleGoToDelivery}
                 />
-            </Drawer.Section>
-            <Drawer.Section title='Other'>
+            </Drawer.Section> */}
+            {/* <Drawer.Section title='Other'>
                 <Drawer.Item
                     label="Price Comparator"
                     active={isActive === 'priceComparator'}
                     onPress={handleGoToPriceComparator}
                 />
-            </Drawer.Section>
+            </Drawer.Section> */}
         </View>
     );
 };
